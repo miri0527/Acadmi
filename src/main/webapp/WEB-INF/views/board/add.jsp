@@ -125,7 +125,7 @@
 													</div>
 												</c:if>
 												
-												<c:if test="${board eq 'lectureQna'}">
+												<c:if test="${board eq 'lectureQna'||board eq 'Qna'}">
 													<div class="col-md-12 mt-4">
 													  <div style="display: flex; align-items: center;">
 													    <label for="secret" class="form-label strongFont2" style="margin-bottom: 0; margin-left:5px">비밀글</label>

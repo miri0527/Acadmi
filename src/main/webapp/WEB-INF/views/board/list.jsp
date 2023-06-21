@@ -202,8 +202,13 @@
 															<c:forEach begin="1" end="${dto.depth}">
 																<img class="fileIcon2" width="20" height="20" src="/images/reply.png" style="margin-right: 5px">
 															</c:forEach>							
-														</c:catch>								
-														<a class="title" href="./detail?num=${dto.num}">${dto.title}</a>
+														</c:catch>					
+														<c:if test="${dto.writer eq userName}">			
+															<a class="title" href="./detail?num=${dto.num}">${dto.title}</a>
+														</c:if>
+														<c:if test="${dto.writer ne userName}">			
+															<span>비밀글입니다.</span>
+														</c:if>
 														<c:forEach items="${dto.fileVOs}" var="fileVO">
 															<c:if test="${fileVO.oriName ne null}">
 																<img class="fileIcon" width="25" height="25" src="/images/fileIcon.png" style="margin-left: 5px">
@@ -263,7 +268,7 @@
 															        <a class="title" href="./detail?num=${dto.num}">${dto.title}</a>
 															    </c:when>
 															    <c:otherwise>
-															        <a class="title">비밀글입니다.</a>	
+															        <a class="title" style="color:gray;">비밀글입니다.</a>	
 															    </c:otherwise>
 															</c:choose>																	
 														</c:if>
