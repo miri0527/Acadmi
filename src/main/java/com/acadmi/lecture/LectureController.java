@@ -143,10 +143,14 @@ public class LectureController {
 		return mv;
 	}
 	@PostMapping("update")
-	public ModelAndView setLectureUpdate(LectureVO lectureVO, ModelAndView mv, @RequestParam("buttonType")String buttonType) throws Exception{
+	public ModelAndView setLectureUpdate(LectureVO lectureVO, ModelAndView mv, @RequestParam("buttonType")String buttonType, HttpSession session) throws Exception{
 		if(buttonType.equals("1")) {
 			int result = lectureService.setLectureUpdate(lectureVO);
 			mv.addObject("result","강의가 등록되었습니다.");
+			Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
+			SecurityContextImpl contextImpl = (SecurityContextImpl) obj; 
+			Authentication authentication = contextImpl.getAuthentication();
+			lectureVO.setUsername(authentication.getName());
 			result = notificationService.setLecture(lectureVO);
 		} else if(buttonType.equals("0")){
 			int result = lectureService.setTemporaryUpdate(lectureVO);
