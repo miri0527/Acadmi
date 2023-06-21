@@ -159,13 +159,18 @@
 												</c:if>
 											</c:if>
 											
-								            <c:if test="${userName eq boardVO.writer}">
-												<c:if test="${board eq 'qna' || board eq 'notice'}">
+											<c:if test="${board eq 'notice'}">
+												<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 													<a id="delete" data-board-num="${boardVO.num}" data-board-name="${board}" class="btn btn-danger float-right">삭제</a>
-												</c:if>
-												<c:if test="${board eq 'lectureQna' || board eq 'lectureNotice'}">
-													<a id="delete" data-board-num="${boardVO.num}" data-board-name="${board}" data-board-lectureNum="${boardVO.lectureNum}" class="btn btn-danger float-right">삭제</a>
-												</c:if>
+													<a href="./update?num=${boardVO.num}" id="update" class="btn btn-info float-right" style="margin-right: 5px">수정</a>
+												</sec:authorize>
+											</c:if>
+											<c:if test="${userName eq boardVO.writer &&board eq 'qna'}">
+												<a id="delete" data-board-num="${boardVO.num}" data-board-name="${board}" class="btn btn-danger float-right">삭제</a>
+												<a href="./update?num=${boardVO.num}" id="update" class="btn btn-info float-right" style="margin-right: 5px">수정</a>
+											</c:if>
+								            <c:if test="${userName eq boardVO.writer &&(board eq 'lectureQna' || board eq 'lectureNotice')}">
+												<a id="delete" data-board-num="${boardVO.num}" data-board-name="${board}" data-board-lectureNum="${boardVO.lectureNum}" class="btn btn-danger float-right">삭제</a>
 												<a href="./update?num=${boardVO.num}" id="update" class="btn btn-info float-right" style="margin-right: 5px">수정</a>
 											</c:if>
 											<c:if test="${board eq 'qna' || board eq 'notice'}">
