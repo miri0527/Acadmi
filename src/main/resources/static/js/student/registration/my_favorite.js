@@ -1,5 +1,5 @@
 //my_lecture_insert
-$("#allLectureList").on("click", "#mli", function(e) {
+$("#myFavoriteList").on("click", "#mli", function(e) {
     let check = window.confirm("신청하시겠습니까?");
     if (check) {
         const lectureNum = $(this).attr("data-mli-num");
