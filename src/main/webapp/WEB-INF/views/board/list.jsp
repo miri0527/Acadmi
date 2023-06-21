@@ -208,6 +208,7 @@
 														</c:if>
 														<c:if test="${dto.writer ne userName}">			
 															<span>비밀글입니다.</span>
+															<img class="lockIcon" width="25" height="25" src="/images/lock.png" style="margin-left: 5px">
 														</c:if>
 														<c:forEach items="${dto.fileVOs}" var="fileVO">
 															<c:if test="${fileVO.oriName ne null}">
