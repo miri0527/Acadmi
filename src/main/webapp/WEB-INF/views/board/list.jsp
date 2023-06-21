@@ -29,10 +29,7 @@
 		
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 			<c:choose>
-				<c:when test="${board eq 'lectureNotice'}">
-					<c:import url="../temp/lecture_header.jsp"></c:import>
-				</c:when>
-				<c:when test="${board eq 'lectureQna'}">
+				<c:when test="${board eq 'lectureNotice' || board eq 'lectureQna'}">
 					<c:import url="../temp/lecture_header.jsp"></c:import>
 				</c:when>
 				<c:otherwise>
@@ -43,10 +40,7 @@
 	
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
 			<c:choose>
-				<c:when test="${board eq 'lectureNotice'}">
-					<c:import url="../temp/lecture_header.jsp"></c:import>
-				</c:when>
-				<c:when test="${board eq 'lectureQna'}">
+				<c:when test="${board eq 'lectureNotice' || board eq 'lectureQna'}">
 					<c:import url="../temp/lecture_header.jsp"></c:import>
 				</c:when>
 				<c:otherwise>
