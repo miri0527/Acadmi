@@ -94,11 +94,14 @@
 					                    				<c:if test="${attendee.creditVO.credit!=null}">
 					                    					<td>${attendee.creditVO.credit}</td>
 					                    					<c:choose>
-														        <c:when test="${attendee.rank <=(detail.subscription*50/100)}">
+														        <c:when test="${attendee.rank <=(detail.subscription*40/100)}">
 														            <td>A</td>
 														        </c:when>
-														        <c:otherwise>
+														        <c:when test="${attendee.rank <=(detail.subscription*80/100)&&attendee.rank >=(detail.subscription*40/100)}">
 														            <td>B</td>
+														        </c:when>
+														        <c:otherwise>
+														            <td>C</td>
 														        </c:otherwise>
 														    </c:choose>
 					                    				</c:if>
