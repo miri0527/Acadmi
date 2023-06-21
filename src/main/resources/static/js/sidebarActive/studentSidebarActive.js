@@ -32,4 +32,6 @@ if(window.location.pathname == '/student/myLectureList'){
 	$('#boardItem').addClass('menu-open')
 	$('#boardLink').addClass('active')
 	$('#qnaLink').addClass('active')
+} else if(window.location.pathname.startsWith('/lecture')){
+	$('#studentLectureLink').addClass('active')
 }
