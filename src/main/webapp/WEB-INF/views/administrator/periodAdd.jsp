@@ -50,7 +50,7 @@
 						<div class="card">
 							<div class="card-header" style="color: gray;">
 								<i class="fa-solid fa-clock"></i>
-								<span class="mt-2 mb-1"> 시작일 10:00:00 | 종료일 23:59:59</span>
+								<span class="mt-2 mb-1"> 시작 시간 10:00:00 | 종료 시간 23:59:59</span>
 								<p style="font-size: 14px; margin-bottom: 0px;">이미 존재하는 기간이면 등록되어 있는 정보가 수정됩니다.</p>
 							</div>	
 							<div class="card-body row">
