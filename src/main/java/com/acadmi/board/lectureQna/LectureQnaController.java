@@ -117,12 +117,13 @@ public class LectureQnaController {
 		ModelAndView mv = new ModelAndView();
 		
 		int result = lectureQnaService.setInsert(lectureQnaVO, addfiles);
-		
-		if(lectureQnaVO.getSecret()==1) {			
+		mv.setViewName("redirect:./list?lectureNum=" + lectureNum);
+		if(lectureQnaVO.getSecret() == null) {
+			return mv;
+		} else if(lectureQnaVO.getSecret()==1) {			
 			result = notificationService.setLectureQna(lectureQnaVO);
 		}
 		
-		mv.setViewName("redirect:./list?lectureNum=" + lectureNum);
 		
 		return mv;
 	}
