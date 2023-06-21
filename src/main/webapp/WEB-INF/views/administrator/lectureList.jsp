@@ -222,10 +222,14 @@
 				                        		<a href="./lectureRoomAssignment?lectureNum=${lectureNum}&startTime=${lectureStartTime}&endTime=${lectureEndTime}&weekday=${lectureWeekday}&personal=${lectureRoomPersonal}"><button class="btn btn-info">강의실 배정</button></a>
 				                        	</c:if>
 						   	 			</td>
-			                        	
-			                        <c:if test="${lectureBuilding ne null && lectureStatus ne 0}">
+			                        <c:choose>
+			                        <c:when test="${lectureBuilding ne null && lectureStatus ne 0}">
 			                        	<td ><button  class="btn btn-danger" data-lecturenum="${lectureNum}">폐강</button></td>
-					   	 			</c:if>
+					   	 			</c:when>
+					   	 			<c:otherwise>
+					   	 				<td>&nbsp;</td>
+					   	 			</c:otherwise>
+					   	 			</c:choose>
 					   	 			<td></td>
 					   	 			
 					   	 			

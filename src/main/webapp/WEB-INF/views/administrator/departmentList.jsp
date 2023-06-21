@@ -125,9 +125,6 @@
 				                      <th style="width : 18%">
 				                          사용 여부
 				                      </th>
-				                      <th style="width: 8%">
-				                 
-				                      </th>
 				                      <th style="width : 10%"></th>
 				                    
 				                  </tr>
