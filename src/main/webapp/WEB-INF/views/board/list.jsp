@@ -206,8 +206,16 @@
 														<c:if test="${dto.writer eq userName}">			
 															<a class="title" href="./detail?num=${dto.num}">${dto.title}</a>
 														</c:if>
-														<c:if test="${dto.writer ne userName}">			
-															<span>비밀글입니다.</span>
+														<c:if test="${dto.writer ne userName}">	
+															<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+																<a class="title" href="./detail?num=${dto.num}">${dto.title}</a>
+															</sec:authorize>
+															<sec:authorize access="hasRole('ROLE_PROFESSOR')">	
+																<span>비밀글입니다.</span>
+															</sec:authorize>
+															<sec:authorize access="hasRole('ROLE_STUDENT')">	
+																<span>비밀글입니다.</span>
+															</sec:authorize>
 															<img class="lockIcon" width="25" height="25" src="/images/lock.png" style="margin-left: 5px">
 														</c:if>
 														<c:forEach items="${dto.fileVOs}" var="fileVO">
@@ -269,7 +277,8 @@
 															        <a class="title" href="./detail?num=${dto.num}">${dto.title}</a>
 															    </c:when>
 															    <c:otherwise>
-															        <a class="title" style="color:gray;">비밀글입니다.</a>	
+															    	
+																		<a class="title" style="color:gray;">비밀글입니다.</a>	
 															    </c:otherwise>
 															</c:choose>																	
 														</c:if>
