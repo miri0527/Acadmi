@@ -159,7 +159,7 @@ websocket.onmessage = function(event){
 	let msgRecipient = getUrlParameter('roomSender')
 	let chatNum = $('#chatNum').val();
 	let date = new Date().toLocaleTimeString();
-	let recipientName = $(this).data('recipient-name')
+	let recipientName = $('#chatSend').data('recipient-name')
 	let recipientProfile = $('#recipientProfile').data('file-name')
 	console.log(recipientProfile)
 	let message = {
