@@ -101,6 +101,9 @@ public interface AdministratorDAO {
 	
 	//강의 조회
 	public List<LectureVO> getLectureList(Pagination pagination) throws Exception;
+	public List<LectureVO> getLectureListAll(Pagination pagination) throws Exception;
+	public Integer getDeptNumDetail(String username) throws Exception;
+
 	
 	public Long getTotalCountLecture(Pagination pagination) throws Exception;
 	

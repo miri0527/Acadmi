@@ -1,14 +1,18 @@
 package com.acadmi.administrator;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -507,12 +511,29 @@ public class AdministratorController {
 	
 	//강의 조회
 	@GetMapping("lectureList")
-	public ModelAndView getLectureList(Pagination pagination) throws Exception {
+	public ModelAndView getLectureList(Pagination pagination, HttpSession session, AdministratorVO administratorVO) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
-		List<LectureVO> ar = administratorService.getLectureList(pagination);
+		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl contextImpl = (SecurityContextImpl) obj; 
+		Authentication authentication = contextImpl.getAuthentication();
+		pagination.setUsername(authentication.getName());
+		administratorVO.setUsername(authentication.getName());
+		
+		Integer deptNum =  administratorService.getDeptNumDetail(administratorVO.getUsername());
+		
+		List<LectureVO> ar = null;
+		if(deptNum == 1) {
+			ar = administratorService.getLectureListAll(pagination);
+		}else {
+			ar = administratorService.getLectureList(pagination);
+		}
+
+		
+		
 		List<DepartmentVO> ar2 =  administratorService.getDepartment();
 		List<String> ar3 =  administratorService.getCurrentYear();
+		
 		
 		mv.addObject("list", ar);
 		mv.addObject("department", ar2);
@@ -521,6 +542,7 @@ public class AdministratorController {
 		
 		return mv;
 	}
+ 
 	
 	//강의 폐강
 	@PostMapping("lectureList")
@@ -552,11 +574,25 @@ public class AdministratorController {
 	}
 	
 	@GetMapping("homeLectureRoom")
-	public ModelAndView getHomeLectureRoom(Pagination pagination) throws Exception {
+	public ModelAndView getHomeLectureRoom(Pagination pagination, HttpSession session, AdministratorVO administratorVO) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
+		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl contextImpl = (SecurityContextImpl) obj; 
+		Authentication authentication = contextImpl.getAuthentication();
+		pagination.setUsername(authentication.getName());
+		administratorVO.setUsername(authentication.getName());
+		
+		Integer deptNum =  administratorService.getDeptNumDetail(administratorVO.getUsername());
+		
+		List<LectureVO> ar = null;
+		if(deptNum == 1) {
+			ar = administratorService.getLectureListAll(pagination);
+		}else {
+			ar = administratorService.getLectureList(pagination);
+		}
+		
 		pagination.setPerPage(5L);
-		List<LectureVO> ar = administratorService.getLectureList(pagination);
 		mv.addObject("list", ar);
 		
 		mv.setViewName("administrator/homeLectureRoom");

@@ -504,6 +504,22 @@ public class AdministratorService{
 		return ar;
 	}
 	
+	public List<LectureVO> getLectureListAll(Pagination pagination) throws Exception {
+		Long totalCount = administratorDAO.getTotalCountLecture(pagination);
+		
+		pagination.makeNum(totalCount);
+		pagination.makeStartRow();
+		
+		List<LectureVO> ar =  administratorDAO.getLectureListAll(pagination);
+		
+		
+		return ar;
+	}
+	
+	public Integer getDeptNumDetail(String username) throws Exception {
+		return administratorDAO.getDeptNumDetail(username);
+	}
+	
 	//강의 폐강
 	public int setLectureUpdate(LectureVO lectureVO) throws Exception {
 		return administratorDAO.setLectureUpdate(lectureVO);

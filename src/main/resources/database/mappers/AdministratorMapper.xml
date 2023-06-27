@@ -439,16 +439,38 @@
 	SELECT YEAR(CURRENT_DATE()) - 5
   </select>
   
+  <!--기간 수정 -->
+  
+  <select id="getPeriodDetail" parameterType="PeriodVO" resultType="PeriodVO">
+  	SELECT * FROM PERIOD
+  	WHERE YEAR = #{year} AND SEMESTER=#{semester}
+  </select>
+  
+  <update id="getPeriodUpdate" parameterType="PeriodVO">
+  	UPDATE PERIOD 
+  	SET APPLICATIONSTART = CONCAT(#{applicationStart}, ' 10:00:00'), 
+  		APPLICATIONEND = CONCAT(#{applicationEnd}, ' 23:59:59'),
+		FAVORITESTART = CONCAT(#{favoriteStart}, ' 10:00:00'),
+		FAVORITEEND = CONCAT(#{favoriteEnd}, ' 23:59:59'),
+		REGISTRATIONSTART = CONCAT(#{registrationStart}, ' 10:00:00'),
+		DEADLINE = CONCAT(#{deadline}, ' 23:59:59')
+	WHERE YEAR = #{year} AND SEMESTER = #{semester}	
+  </update>
+  
   <!--강의 목록 조회  -->
   <select id="getLectureList" resultMap="LectureList" parameterType="Pagination">
-  	SELECT D.DEPTNAME , L.*, P.NAME, P.PROFESSORROOM , L.STATUS  FROM PROFESSOR P
-	INNER JOIN 
-		LECTURE L 
-	ON L.USERNAME = P.USERNAME
-		RIGHT OUTER JOIN
-			DEPARTMENT D 
-		ON L.DEPTNUM = D.DEPTNUM 
-	WHERE TEMPORARY =1 
+  		SELECT D.DEPTNAME ,D.DEPTNUM, L.*, P.NAME, P.PROFESSORROOM , L.STATUS, A.*  FROM PROFESSOR P
+		INNER JOIN 
+			LECTURE L 
+		ON L.USERNAME = P.USERNAME
+			RIGHT OUTER JOIN
+				DEPARTMENT D 
+			ON L.DEPTNUM = D.DEPTNUM 
+				INNER JOIN 
+					ADMINISTRATOR A 
+				ON L.DEPTNUM = A.DEPTNUM 	
+		WHERE TEMPORARY =1
+		AND A.USERNAME = #{username}
 	
 	
 	<if test="deptName != null and !deptName.equals('')">
@@ -495,6 +517,10 @@
  		<id column="USERNAME" property="username"/>
  		<result column="NAME" property="name"/>
  	</association>
+ 	<association property="administratorVO" javaType="AdministratorVO">
+ 		<id column="USERNAME" property="username"/>
+ 		<result column="NAME" property="name"/>
+ 	</association>
  	<association property="lectureRoomVO" javaType="LectureRoomVO">
  		<result column="PERSONAL" property="personal"/>
  		<collection property="timeTableVOs" javaType="List" ofType="TimeTableVO">
@@ -508,6 +534,45 @@
  		</collection>
  	</association>
  </resultMap>
+ 
+ <select id="getLectureListAll" resultMap="LectureList" parameterType="Pagination">
+ 		SELECT D.DEPTNAME ,D.DEPTNUM, L.*, P.NAME, P.PROFESSORROOM , L.STATUS, A.*  FROM PROFESSOR P
+		INNER JOIN 
+			LECTURE L 
+		ON L.USERNAME = P.USERNAME
+			RIGHT OUTER JOIN
+				DEPARTMENT D 
+			ON L.DEPTNUM = D.DEPTNUM 
+				INNER JOIN
+					ADMINISTRATOR A 
+		WHERE TEMPORARY =1
+		AND A.USERNAME = #{username}
+		
+		<if test="deptName != null and !deptName.equals('')">
+   			AND DEPTNAME = #{deptName}
+		</if>
+		<if test="year != null and !year.equals('')">
+		    AND YEAR = #{year}
+		</if>
+		<if test="semester != null and !semester.equals('')">
+		    AND SEMESTER = #{semester}
+		</if>
+		<if test="status !=null and !status.equals('')">
+		    AND L.STATUS = #{status}
+		</if>
+	
+		
+		<if test="search != null and !search.equals('')">
+			AND LECTURENAME LIKE CONCAT('%', #{search}, '%')
+		</if>
+		ORDER BY L.LECTURENUM  DESC
+		LIMIT #{startRow},#{perPage}
+ </select>
+ 
+ <select id="getDeptNumDetail" resultType="Integer" parameterType="String">
+ 	SELECT DEPTNUM FROM ADMINISTRATOR 
+	WHERE USERNAME = #{username}
+ </select>
  
   <select id="getTotalCountLecture" resultType="Long">
   	SELECT COUNT(LECTURENUM) FROM LECTURE
