@@ -22,7 +22,7 @@ if(window.location.pathname.startsWith('/notice')){
 	$('#memberItem').addClass('menu-open')
 	$('#memberLink').addClass('active')
 	$('#acountList').addClass('active')
-} else if(window.location.pathname == '/administrator/periodList' || window.location.pathname == '/administrator/periodAdd'){
+} else if(window.location.pathname == '/administrator/periodList' || window.location.pathname == '/administrator/periodAdd' || window.location.pathname == '/administrator/periodUpdate'){
 	$('#periodItem').addClass('menu-open')
 	$('#periodLink').addClass('active')
 	$('#periodListLink').addClass('active')

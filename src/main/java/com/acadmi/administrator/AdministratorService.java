@@ -491,6 +491,16 @@ public class AdministratorService{
 		return administratorDAO.getCurrentYearMinus();
 	}
 	
+	//기간 수정
+	
+	public PeriodVO getPeriodDetail(PeriodVO periodVO) throws Exception {
+		return administratorDAO.getPeriodDetail(periodVO);
+	}
+	
+	public int getPeriodUpdate(PeriodVO periodVO) throws Exception {
+		return administratorDAO.getPeriodUpdate(periodVO);
+	}
+	
 	//강의 조회
 	public List<LectureVO> getLectureList(Pagination pagination) throws Exception {
 		Long totalCount = administratorDAO.getTotalCountLecture(pagination);
@@ -523,6 +533,11 @@ public class AdministratorService{
 	//강의 폐강
 	public int setLectureUpdate(LectureVO lectureVO) throws Exception {
 		return administratorDAO.setLectureUpdate(lectureVO);
+	}
+	
+	//강의 개강
+	public int setLectureUpdate2(LectureVO lectureVO) throws Exception {
+		return administratorDAO.setLectureUpdate2(lectureVO);
 	}
 	
 	//강의실 배정

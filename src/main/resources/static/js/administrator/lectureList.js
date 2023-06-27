@@ -1,6 +1,7 @@
 
 $("#tableAdmin").on("click", '[data-lecturenum]', function() {
     let lectureNum = $(this).attr('data-lecturenum')
+    let status = $('[data-status]').attr('data-status')
     let flag = true;
 
    while(flag) {
@@ -9,6 +10,8 @@ $("#tableAdmin").on("click", '[data-lecturenum]', function() {
 
     console.log(confirm)
     console.log(lectureNum)
+    
+
 
     if(confirm === lectureNum) {
        flag = false;
@@ -16,11 +19,18 @@ $("#tableAdmin").on("click", '[data-lecturenum]', function() {
         url : "./lectureList",
         type : 'POST',
         data : {
-            lectureNum : lectureNum
+            lectureNum : lectureNum,
+            status : status
+            
         },
         
         success : function() {
-            alert("폐강되었습니다.")
+			if(status == 1) {
+				 alert("폐강되었습니다.")
+			}else {
+				alert("개강되었습니다.")
+			}
+           
            
             location.href="./lectureList"
             

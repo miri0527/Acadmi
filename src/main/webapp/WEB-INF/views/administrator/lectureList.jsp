@@ -223,8 +223,11 @@
 				                        	</c:if>
 						   	 			</td>
 			                        <c:choose>
-			                        <c:when test="${lectureBuilding ne null && lectureStatus ne 0}">
-			                        	<td ><button  class="btn btn-danger" data-lecturenum="${lectureNum}">폐강</button></td>
+			                        <c:when test="${lectureBuilding ne null && lectureStatus eq 1}">
+			                        	<td ><button  class="btn btn-danger" data-lecturenum="${lectureNum}" data-status="${lectureStatus}">폐강</button></td>
+					   	 			</c:when>
+					   	 			<c:when test="${lectureBuilding ne null && lectureStatus eq 0 }">
+					   	 				<td ><button  class="btn btn-primary" data-lecturenum="${lectureNum}" data-status="${lectureStatus}">개강</button></td>
 					   	 			</c:when>
 					   	 			<c:otherwise>
 					   	 				<td>&nbsp;</td>

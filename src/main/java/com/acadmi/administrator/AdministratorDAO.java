@@ -98,6 +98,8 @@ public interface AdministratorDAO {
 	public Long getTotalCountPeriod(Pagination pagination) throws Exception;
 	public List<String> getCurrentYear() throws Exception;
 	public List<String> getCurrentYearMinus() throws Exception;
+	public PeriodVO getPeriodDetail(PeriodVO periodVO) throws Exception;
+	public int getPeriodUpdate(PeriodVO periodVO) throws Exception;
 	
 	//강의 조회
 	public List<LectureVO> getLectureList(Pagination pagination) throws Exception;
@@ -109,6 +111,9 @@ public interface AdministratorDAO {
 	
 	//강의 폐강
 	public int setLectureUpdate(LectureVO lectureVO) throws Exception;
+	
+	//강의 개강
+	public int setLectureUpdate2(LectureVO lectureVO) throws Exception;
 	
 	//강의실 배정 
 	public List<LectureRoomVO> getLectureRoomAssignment(Map<String, Object> map)throws Exception;

@@ -443,7 +443,7 @@
   
   <select id="getPeriodDetail" parameterType="PeriodVO" resultType="PeriodVO">
   	SELECT * FROM PERIOD
-  	WHERE YEAR = #{year} AND SEMESTER=#{semester}
+  	WHERE YEAR = #{year} AND SEMESTER= #{semester}
   </select>
   
   <update id="getPeriodUpdate" parameterType="PeriodVO">
@@ -578,10 +578,16 @@
   	SELECT COUNT(LECTURENUM) FROM LECTURE
   </select>
   
-  <!--강의실 폐강  -->
+  <!--강의 폐강  -->
   <update id="setLectureUpdate"  parameterType="LectureVO" >
   	UPDATE LECTURE
   	SET STATUS=0
+  	WHERE LECTURENUM=#{lectureNum}
+  </update>
+  
+  <!--강의 개겅 -->
+  <update id="setLectureUpdate2" parameterType="LectureVO">
+  	UPDATE LECTURE SET STATUS=1
   	WHERE LECTURENUM=#{lectureNum}
   </update>
 

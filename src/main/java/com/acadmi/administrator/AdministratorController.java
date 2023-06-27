@@ -487,7 +487,8 @@ public class AdministratorController {
 		
 		  if(bindingResult.hasErrors()) { 
 			  log.warn("검증에 실패");
-			  mv.setViewName("administrator/periodAdd"); return mv; 
+			  mv.setViewName("administrator/periodAdd"); 
+			  return mv; 
 		 }
 		 
 		
@@ -507,6 +508,38 @@ public class AdministratorController {
 		
 	}
 	
+	@GetMapping("periodUpdate")
+	public ModelAndView getPeriodUpdate(PeriodVO periodVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		periodVO = administratorService.getPeriodDetail(periodVO);
+		
+		
+		mv.addObject("periodVO", periodVO);
+		mv.setViewName("administrator/periodUpdate");
+		
+		return mv;
+	}
+	
+	@PostMapping("periodUpdate")
+	public ModelAndView getPeriodUpdate2(PeriodVO periodVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		int result = administratorService.getPeriodUpdate(periodVO);
+		
+		String message= "수정 실패";
+		
+		if(result > 0) {
+			message = "수정되었습니다";
+			
+		}
+		
+		mv.addObject("result", message);
+		mv.setViewName("common/result");
+		
+		mv.addObject("url", "./periodList");
+		return mv;
+	}
 
 	
 	//강의 조회
@@ -549,23 +582,29 @@ public class AdministratorController {
 	public ModelAndView setLectureUpdate(@Valid LectureVO lectureVO, BindingResult bindingResult) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
-		int result = administratorService.setLectureUpdate(lectureVO);
 		
-		if(bindingResult.hasErrors()) {
-			log.warn("검증에 실패");
-			mv.setViewName("administrator/lectureList");
-			return mv;
-		}
+		if(lectureVO.getStatus() == 1) {
+			int result = administratorService.setLectureUpdate(lectureVO);
+			
+			if(bindingResult.hasErrors()) {
+				log.warn("검증에 실패");
+				mv.setViewName("administrator/lectureList");
+				return mv;
+			}
+			
 		
-		String message= "폐강 실패";
-		
-		if(result > 0) {
-			message = "폐강 되었습니다.";
+		}else if(lectureVO.getStatus()== 0){
+			int result = administratorService.setLectureUpdate2(lectureVO);
+			
+			if(bindingResult.hasErrors()) {
+				log.warn("검증에 실패");
+				mv.setViewName("administrator/lectureList");
+				return mv;
+			}
+			
 			
 		}
 		
-		mv.addObject("result", message);
-		mv.setViewName("common/result");
 		
 		mv.addObject("url", "./lectureList");
 		return mv;

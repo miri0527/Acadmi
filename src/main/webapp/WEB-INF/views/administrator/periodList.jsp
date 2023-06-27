@@ -106,6 +106,7 @@
 					   					<th>장바구니 종료일</th>
 					   					<th>강의 등록 시작일</th>
 					   					<th>강의 등록 종료일</th>
+					   					<th></th>
 					   					
 					   				</tr>
 					   			</thead>
@@ -120,6 +121,7 @@
 					   						<td>${periodVO.favoriteEnd }</td>
 					   						<td>${periodVO.registrationStart }</td>
 					   						<td>${periodVO.deadline }</td>
+					   						<td><a href="./periodUpdate?year=${periodVO.year}&semester=${periodVO.semester}"> <button class="btn btn-primary">기간 수정</button></a></td>
 					   						
 					   					</tr>
 					   				</c:forEach>
