@@ -71,7 +71,7 @@
 														<option value="">전체</option>
 															<c:forEach items="${college}" var="collegeVO">
 																<c:if test="${collegeVO.collegeNum != 1 && collegeVO.collegeNum != 2}">
-																	<option value="${collegeVO.collegeName}">${collegeVO.collegeName }</option>
+																	<option value="${collegeVO.collegeName}"${collegeVO.collegeName eq param.collegeName?'selected' : '' }>${collegeVO.collegeName }</option>
 																</c:if>	
 															</c:forEach>
 														</select>
@@ -84,7 +84,7 @@
 															<option value="">전체</option>
 															<c:forEach items="${department}" var="departmentVO">
 																<c:if test="${departmentVO.deptNum !=1 && departmentVO.deptNum !=2 }">
-																	<option value="${departmentVO.deptName}">${departmentVO.deptName}</option>
+																	<option value="${departmentVO.deptName}" ${departmentVO.deptName eq param.deptName ? 'selected' :'' }>${departmentVO.deptName}</option>
 																</c:if>
 															</c:forEach>
 														</select>
@@ -95,9 +95,9 @@
 														<label >상태</label>
 														<select class="select2" name="status" style="width: 100%;">
 															<option value="">전체</option>
-															<option value="1">재직</option>
-															<option value="2">휴직</option>
-															<option value="3">퇴직</option>
+															<option value="1"${param.status eq 1 ?'selected' :''}>재직</option>
+															<option value="2"${param.status eq 2 ?'selected' :''}>휴직</option>
+															<option value="3"${param.status eq 3 ?'selected' :''}>퇴직</option>
 														</select>
 													</div>
 												</div>
@@ -106,7 +106,7 @@
 												<div class="col-6">
 													<div class="form-group">
 														<label>교수 번호</label>
-														<input type="text" class="form-control" name="username" placeholder="교수 번호를 입력하세요.">
+														<input type="text" class="form-control" name="username" placeholder="교수 번호를 입력하세요." value="${param.username }">
 													</div>
 												</div>
 												<div class="col-6">

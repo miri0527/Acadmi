@@ -41,7 +41,7 @@
 			
  			<if test="deptName != null and !deptName.equals('')">
 				AND DEPTNAME = #{deptName}
-			</if>
+			</if>	
 			<if test="collegeName != null and !collegeName.equals('')">
 				AND COLLEGENAME = #{collegeName}
 			</if>
@@ -85,8 +85,8 @@
 	<!-- 학과 검색 -->
 	<sql id="departmentSearch">
 		<trim prefix="WHERE" prefixOverrides="AND |OR">
-			<if test="collegeNum !=null and !collegeNum.equals('')">
-				AND COLLEGENUM = #{collegeNum}
+			<if test="collegeName !=null and !collegeName.equals('')">
+				AND COLLEGENAME = #{collegeName}
 			</if>
 			<if test="search != null and !search.equals('')">
 				AND DEPTNAME LIKE CONCAT('%', #{search}, '%')
@@ -376,19 +376,19 @@
 	INSERT INTO PERIOD 
 	SET YEAR = #{year},
 		SEMESTER = #{semester},
-		APPLICATIONSTART = CONCAT(#{applicationStart}, ' 10:00:00'), 
-		APPLICATIONEND = CONCAT(#{applicationEnd}, ' 23:59:59'),
-		FAVORITESTART = CONCAT(#{favoriteStart}, ' 10:00:00'),
-		FAVORITEEND = CONCAT(#{favoriteEnd}, ' 23:59:59'),
-		REGISTRATIONSTART = CONCAT(#{registrationStart}, ' 10:00:00'),
-		DEADLINE = CONCAT(#{deadline}, ' 23:59:59')
+		APPLICATIONSTART = CONCAT(#{applicationStart},'%10:00:00'), 
+		APPLICATIONEND = CONCAT(#{applicationEnd},'%23:59:59'),
+		FAVORITESTART = CONCAT(#{favoriteStart}, '%10:00:00'),
+		FAVORITEEND = CONCAT(#{favoriteEnd}, '%23:59:59'),
+		REGISTRATIONSTART = CONCAT(#{registrationStart}, '%10:00:00'),
+		DEADLINE = CONCAT(#{deadline}, '%23:59:59')
 			ON DUPLICATE KEY UPDATE
-		APPLICATIONSTART = CONCAT(#{applicationStart}, ' 10:00:00'), 
-		APPLICATIONEND = CONCAT(#{applicationEnd}, ' 23:59:59'),
-		FAVORITESTART = CONCAT(#{favoriteStart}, ' 10:00:00'),
-		FAVORITEEND = CONCAT(#{favoriteEnd}, ' 23:59:59'),
-		REGISTRATIONSTART = CONCAT(#{registrationStart}, ' 10:00:00'),
-		DEADLINE = CONCAT(#{deadline}, ' 23:59:59')
+		APPLICATIONSTART = CONCAT(#{applicationStart}, '%10:00:00'), 
+		APPLICATIONEND = CONCAT(#{applicationEnd}, '%23:59:59'),
+		FAVORITESTART = CONCAT(#{favoriteStart}, '%10:00:00'),	
+		FAVORITEEND = CONCAT(#{favoriteEnd}, '%23:59:59'),
+		REGISTRATIONSTART = CONCAT(#{registrationStart}, '%10:00:00'),
+		DEADLINE = CONCAT(#{deadline}, '%23:59:59')
   </insert>
 
   <!--기간 조회 -->
@@ -442,18 +442,21 @@
   <!--기간 수정 -->
   
   <select id="getPeriodDetail" parameterType="PeriodVO" resultType="PeriodVO">
-  	SELECT * FROM PERIOD
+  	SELECT YEAR,SEMESTER, DATE_FORMAT(APPLICATIONSTART,'%Y-%m-%d')APPLICATIONSTART , DATE_FORMAT(APPLICATIONEND, '%Y-%m-%d')APPLICATIONEND,
+	DATE_FORMAT(FAVORITESTART,'%Y-%m-%d')FAVORITESTART, DATE_FORMAT(FAVORITEEND, '%Y-%m-%d')FAVORITEEND, 
+	DATE_FORMAT(REGISTRATIONSTART,'%Y-%m-%d')REGISTRATIONSTART , DATE_FORMAT(DEADLINE, '%Y-%m-%d')DEADLINE 
+	FROM PERIOD
   	WHERE YEAR = #{year} AND SEMESTER= #{semester}
   </select>
   
   <update id="getPeriodUpdate" parameterType="PeriodVO">
   	UPDATE PERIOD 
-  	SET APPLICATIONSTART = CONCAT(#{applicationStart}, ' 10:00:00'), 
-  		APPLICATIONEND = CONCAT(#{applicationEnd}, ' 23:59:59'),
-		FAVORITESTART = CONCAT(#{favoriteStart}, ' 10:00:00'),
-		FAVORITEEND = CONCAT(#{favoriteEnd}, ' 23:59:59'),
-		REGISTRATIONSTART = CONCAT(#{registrationStart}, ' 10:00:00'),
-		DEADLINE = CONCAT(#{deadline}, ' 23:59:59')
+  	SET APPLICATIONSTART = CONCAT(#{applicationStart}, '%10:00:00'), 
+  		APPLICATIONEND = CONCAT(#{applicationEnd}, '%23:59:59'),
+		FAVORITESTART = CONCAT(#{favoriteStart}, '%10:00:00'),
+		FAVORITEEND = CONCAT(#{favoriteEnd}, '%23:59:59'),
+		REGISTRATIONSTART = CONCAT(#{registrationStart}, '%10:00:00'),
+		DEADLINE = CONCAT(#{deadline}, '%23:59:59')
 	WHERE YEAR = #{year} AND SEMESTER = #{semester}	
   </update>
   

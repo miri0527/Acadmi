@@ -90,16 +90,16 @@
 														<label>상태</label>
 														<select class="select2" style="width: 100%;" name="status">
 															<option value="">전체</option>
-															<option value="1"${administratorStatus eq 1 ? 'selected' : '' }>재직</option>
-															<option value="2"${administratorStatus eq 2 ? 'selected' : '' } >휴직</option>
-															<option value="3"${administratorStatus eq 3 ? 'selected' : '' }>퇴직</option>
+															<option value="1"${param.status eq 1 ? 'selected' : '' }>재직</option>
+															<option value="2"${param.status eq 2 ? 'selected' : '' } >휴직</option>
+															<option value="3"${param.status eq 3 ? 'selected' : '' }>퇴직</option>
 														</select>
 													</div>
 												</div>
 												<div class="col-4">
 													<div class="form-group">
 														<label>직원 번호</label>
-														<input type="text" class="form-control" name="username" placeholder="내용을 입력하세요.">
+														<input type="text" class="form-control" name="username" placeholder="내용을 입력하세요." value="${param.username }">
 													</div>
 												</div>
 												<div class="col-4">

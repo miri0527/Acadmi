@@ -31,6 +31,16 @@
 		<a href="/lectureNotice/list?lectureNum=${lecture.lectureNum}" id="lectureNoticeList">공지사항 게시글</a>
 		<a href="/lectureQna/list?lectureNum=${lecture.lectureNum}" id="lectureQnaList">질의응답 게시글</a>
 	</div>	
+	
+	<!-- Submenu_3 -->
+	<button onclick="myFunction_3()" class="sidebar-menu">
+		<i class="fas fa-angle-down fa-2xs"></i>&nbsp
+		학습 활동
+	</button>
+	<div id="submenu_3" class="sidebar-dropdown-content">
+		<a href="/student/lecture/reportList" id="report">과제</a>
+		
+	</div>	
 </div>
 <script type="text/javascript">
 	/* 더 많은 개수의 submenu가 필요할 경우

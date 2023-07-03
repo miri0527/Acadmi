@@ -170,6 +170,14 @@ public class StudentController {
 		
 		return mv;
 	}
+	
+	//과제 열람
+	@GetMapping("lecture/reportList")
+	public ModelAndView getReportList() throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		return mv;
+	}
 
 
 	

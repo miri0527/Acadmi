@@ -51,6 +51,8 @@
 		<typeAlias type="com.acadmi.credit.CreditVO" alias="CreditVO"/>
 		<typeAlias type="com.acadmi.syllabus.SyllabusVO" alias="SyllabusVO"/>
 		<typeAlias type="com.acadmi.syllabus.ClassVO" alias="ClassVO"/>
+		
+		<typeAlias type="com.acadmi.report.ReportVO" alias="ReportVO"/>
   		
   		
   	</typeAliases>

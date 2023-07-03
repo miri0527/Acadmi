@@ -565,7 +565,7 @@ public class AdministratorController {
 		
 		
 		List<DepartmentVO> ar2 =  administratorService.getDepartment();
-		List<String> ar3 =  administratorService.getCurrentYear();
+		List<String> ar3 =  administratorService.getCurrentYearMinus();
 		
 		
 		mv.addObject("list", ar);

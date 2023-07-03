@@ -322,6 +322,28 @@
 		SELECT * FROM PERIOD P
 		WHERE P.FAVORITESTART &lt;= NOW() AND P.FAVORITEEND  &gt;= NOW();
 	</select>
+	
+	<!-- 과제 리스트 -->
+	<select id="getReportList" resultMap="ReportList" parameterType="ReportVO">
+		SELECT * FROM REPORT R
+			INNER JOIN 
+				REPORT_REGISTRATION RR 
+			ON 	R.REGISTRATIONNUM = RR.REGISTRATIONNUM 
+				INNER JOIN 
+					CLASS C 
+				ON RR.ORDER = C.ORDER
+		WHERE R.USERNAME = #{username}
+	</select>
 
+	<resultMap type="ReportVO" id="ReportList">
+		<id column="REPORTNUM" property="reportNum"/>
+		<result column="REGISTRATIONNUM" property="registrationNum"/>
+		<result column="USERNAME" property="username"/>
+		<result column="CONTENTS" property="contents"/>
+		<result column="SCORE" property="score"/>
+		<result column="GRADING" property="grading"/>
+		<result column="SUBMISSIONDATE" property="submissiondate"/>
+	</resultMap>
+	
   	
   </mapper>

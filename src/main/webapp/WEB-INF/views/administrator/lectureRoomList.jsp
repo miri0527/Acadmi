@@ -79,8 +79,8 @@
 														<label>상태</label>
 														<select class="select2" name="status" style="width : 100%;">
 															<option value="">전체</option>
-															<option value="1">사용 가능</option>
-															<option value="0">사용 불가</option>
+															<option value="1"${param.status == 1?'selected':''}>사용 가능</option>
+															<option value="0"${param.status == 0?'selected':''}>사용 불가</option>
 															
 														</select>
 													</div>
@@ -91,7 +91,7 @@
 														<select class="select2" name="lectureBuilding" style="width: 100%;">
 															<option value="">전체</option>
 															<c:forEach items="${list2}" var="lectureRoom">
-																<option value="${lectureRoom.lectureBuilding}">${lectureRoom.lectureBuilding }</option>
+																<option value="${lectureRoom.lectureBuilding}"${lectureRoom.lectureBuilding eq param.lectureBuilding ? 'selected' : '' }>${lectureRoom.lectureBuilding }</option>
 															</c:forEach>
 														</select>
 													</div>
@@ -100,7 +100,7 @@
 												<div class="form-group">
 													<label>강의실 호수</label>
 													<div class="input-group">
-														<input type="text" class="form-control" name="lectureRoom" placeholder="강의실 호수를 입력하세요.">
+														<input type="text" class="form-control" name="lectureRoom" placeholder="강의실 호수를 입력하세요." value="${param.lectureRoom }">
 														<div class="input-group-append">
 															<button type="submit" class="btn btn-default" id="submit">
 																<i class="fas fa-search "></i>

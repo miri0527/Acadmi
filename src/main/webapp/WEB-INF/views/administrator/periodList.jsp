@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +72,7 @@
 							<select class="select2" style="width: 100%;" name="year">
 								<option value="">전체</option>
 		               				<c:forEach items="${year}" var="year">
-										<option value="${year}">${year }</option>
+										<option value="${year}"${year eq param.year ? 'selected' : '' }>${year }</option>
 									</c:forEach>
 		               				<%-- <c:forEach  begin="${map['min']}" end="${map['max']}" varStatus="i">
 		               					<option value="${i.index}" ${lectureVO.year eq i.index  ? 'selected' : ''}>${i.index}</option>
@@ -81,8 +83,8 @@
 							<label>수강 학기</label>
 							<select class="select2" style="width: 100%;" name="semester">
 								<option value="">전체</option>
-               					<option value="1" ${lectureVO.semester eq 1 ? 'selected' : '' }>1학기</option>
-               					<option value="2" ${lectureVO.semester eq 2 ? 'selected' : '' }>2학기</option>
+               					<option value="1" ${param.semester eq 1 ? 'selected' : '' }>1학기</option>
+               					<option value="2" ${param.semester eq 2 ? 'selected' : '' }>2학기</option>
 							</select>
 						</div>
 						<button type="submit" class="btn btn-default" style="height: 50%; margin-top: auto;">

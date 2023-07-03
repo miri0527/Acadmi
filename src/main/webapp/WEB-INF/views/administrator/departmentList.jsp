@@ -72,8 +72,8 @@
 														<label>상태</label>
 														<select class="select2" name="status" style="width: 100%;">
 															<option value="">전체</option>
-															<option value="1">사용 가능</option>
-															<option value="0">사용 불가</option>
+															<option value="1"${param.status eq 1?'selected' : '' }>사용 가능</option>
+															<option value="0"${param.status eq 2?'selected' : '' }>사용 불가</option>
 															
 														</select>
 													</div>
@@ -81,10 +81,10 @@
 												<div class="col-2">
 													<div class="form-group">
 														<label>단과대학</label>
-														<select class="select2" name="collegeNum" style="width: 100%;">
+														<select class="select2" name="collegeName" style="width: 100%;">
 															<option value="">전체</option>
 															<c:forEach items="${college}" var="collegeVO">
-																<option value="${collegeVO.collegeNum}">${collegeVO.collegeName}</option>
+																<option value="${collegeVO.collegeName}"${collegeVO.collegeName eq param.collegeName? 'selected' :'' }>${collegeVO.collegeName}</option>
 															</c:forEach>
 														</select>
 													</div>
@@ -93,7 +93,7 @@
 												<div class="form-group">
 													<label>학과</label>
 													<div class="input-group">
-														<input type="text" class="form-control" name="search" placeholder="학과를 입력하세요.">
+														<input type="text" class="form-control" name="search" placeholder="학과를 입력하세요." value="${pagination.search }">
 														<div class="input-group-append">
 															<button type="submit" class="btn btn-default" id="submit">
 																<i class="fas fa-search "></i>

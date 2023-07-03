@@ -69,7 +69,7 @@
 															<option value="">전체</option>
 															<c:forEach items="${department}" var="departmentVO">
 																<c:if test="${departmentVO.deptNum !=1 && departmentVO.deptNum !=2 }">
-																	<option value="${departmentVO.deptName}">${departmentVO.deptName}</option>
+																	<option value="${departmentVO.deptName}"${departmentVO.deptName eq param.deptName ? 'selected' : '' }>${departmentVO.deptName}</option>
 																</c:if>
 															</c:forEach>
 														</select>
@@ -81,7 +81,7 @@
 														<select class="select2" style="width: 100%;" name="year">
 															<option value="">전체</option>
 															<c:forEach items="${year}" var="year">
-																<option value="${year}">${year}</option>
+																<option value="${year}"${year eq param.year ? 'selected' : ''}>${year}</option>
 															</c:forEach>
 														</select>
 													</div>
@@ -91,8 +91,8 @@
 														<label>학기</label>
 														<select class="select2" style="width: 100%;" name="semester">
 															<option value="">전체</option>
-															<option value="1">1학기</option>
-															<option value="2">2학기</option>
+															<option value="1" ${param.semester eq 1 ? 'selected':''}>1학기</option>
+															<option value="2"${param.semester eq 2 ? 'selected':''}>2학기</option>
 														</select>
 													</div>
 												</div>
@@ -101,8 +101,8 @@
 														<label>상태</label>
 														<select class="select2" style="width: 100%;" name="status">
 															<option value="">전체</option>
-															<option value="0">폐강</option>
-															<option value="1">개강</option>
+															<option value="0"${param.status eq 0 ? 'selected' : '' }>폐강</option>
+															<option value="1"${param.status eq 1 ? 'selected' : '' }>개강</option>
 														</select>
 													</div>
 												</div>

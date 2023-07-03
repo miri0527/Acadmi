@@ -87,7 +87,7 @@
 											    <div class="form-group">
 											      <label>강의 등록 종료일</label>
 											      <br>
-											      <input type="date" class="form-control" id="deadline" " name="deadline" style=" display: inline-block;" >
+											      <input type="date" class="form-control" id="deadline" " name="deadline" style=" display: inline-block;" value="${periodVO.deadline }" >
 											    </div>
 											  </div>
 											</div>
@@ -100,7 +100,7 @@
 											    <div class="form-group">
 											      <label>수강 신청 시작일</label>
 											      <br>
-											      <input type="date" class="form-control" name="applicationStart" style=" display: inline-block; margin-right: 40px;">
+											      <input type="date" class="form-control" name="applicationStart" style=" display: inline-block; margin-right: 40px;" value="${periodVO.applicationStart }">
 											    </div>
 											  </div>
 											
@@ -108,7 +108,7 @@
 											    <div class="form-group">
 											      <label>수강 신청 종료일</label>
 											      <br>
-											      <input type="date" class="form-control" id="applicationEnd" " name="applicationEnd" style=" display: inline-block;">
+											      <input type="date" class="form-control" id="applicationEnd" " name="applicationEnd" style=" display: inline-block;" value="${periodVO.applicationEnd }">
 											    </div>
 											  </div>
 											</div>
@@ -123,7 +123,7 @@
 											    <div class="form-group">
 											      <label>장바구니 시작일</label>
 											      <br>
-											      <input type="date" class="form-control" name="favoriteStart" style="display: inline-block; margin-right: 40px;">
+											      <input type="date" class="form-control" name="favoriteStart" style="display: inline-block; margin-right: 40px;" value="${periodVO.favoriteStart }">
 											    </div>
 											  </div>
 											
@@ -131,7 +131,7 @@
 											    <div class="form-group">
 											      <label>장바구니 종료일</label>
 											      <br>
-											      <input type="date" class="form-control" id="favoriteEnd" onchange="updateApplicationEnd()" name="favoriteEnd" style=" display: inline-block;">
+											      <input type="date" class="form-control" id="favoriteEnd" onchange="updateApplicationEnd()" name="favoriteEnd" style=" display: inline-block;" value="${periodVO.favoriteEnd }">
 											    </div>
 											  </div>
 											</div>

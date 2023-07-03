@@ -71,7 +71,7 @@
 															<option value="">전체</option>
 															<c:forEach items="${college}" var="collegeVO">
 																<c:if test="${collegeVO.collegeNum != 1 && collegeVO.collegeNum != 2}">
-																	<option value="${collegeVO.collegeName}">${collegeVO.collegeName}</option>
+																	<option value="${collegeVO.collegeName}" ${collegeVO.collegeName eq param.collegeName? 'selected' : ''}>${collegeVO.collegeName}</option>
 																</c:if>	
 															</c:forEach>
 														</select>
@@ -84,7 +84,7 @@
 															<option value="">전체</option>
 															<c:forEach items="${department}" var="departmentVO">
 																<c:if test="${departmentVO.deptNum !=1 && departmentVO.deptNum !=2 }">
-																	<option value="${departmentVO.deptName}">${departmentVO.deptName}</option>
+																	<option value="${departmentVO.deptName}" ${departmentVO.deptName eq param.deptName? 'selected' : '' }>${departmentVO.deptName}</option>
 																</c:if>
 															</c:forEach>
 														</select>
@@ -94,11 +94,11 @@
 													<div class="form-grop">
 														<label>학년</label>
 														<select class="select2" name="grade" style="width : 100%;">
-															<option value="">전체</option>
-															<option value="1">1학년</option>
-															<option value="2">2학년</option>
-															<option value="3">3학년</option>
-															<option value="4">4학년</option>
+															<option value="" ${param.grade eq '' ? 'selected' : '' }>전체</option>
+															<option value="1" ${param.grade == 1 ? 'selected' : '' }>1학년</option>
+															<option value="2" ${param.grade == 2 ? 'selected' : '' } >2학년</option>
+															<option value="3" ${param.grade == 3 ? 'selected' : '' }>3학년</option>
+															<option value="4" ${param.grade == 4 ? 'selected' : '' }>4학년</option>
 														</select>
 													</div>
 												</div>
@@ -106,12 +106,12 @@
 													<div class="form-group">
 														<label >상태</label>
 														<select class="select2" name="status" style="width: 100%;">
-															<option value="">전체</option>
-															<option value="1">재학</option>
-															<option value="2">휴학</option>
-															<option value="3">퇴학</option>
-															<option value="4">졸업</option>
-															<option value="5">졸업유예</option>
+															<option value="" ${param.status eq ''? 'selected' : '' }>전체</option>
+															<option value="1"${param.status==1 ?'selected' :'' }>재학</option>
+															<option value="2"${param.status==2 ?'selected' :'' }>휴학</option>
+															<option value="3"${param.status==3 ?'selected' :'' }>퇴학</option>
+															<option value="4"${param.status==4 ?'selected' :'' }>졸업</option>
+															<option value="5"${param.status==5 ?'selected' :'' }>졸업유예</option>
 														</select>
 													</div>
 												</div>
@@ -120,7 +120,7 @@
 												<div class="col-6">
 													<div class="form-group">
 														<label>학번</label>
-														<input type="text" class="form-control" name="username" placeholder=" 학번을 입력하세요.">
+														<input type="text" class="form-control" name="username" placeholder=" 학번을 입력하세요." value="${param.username}">
 													</div>
 												</div>
 												<div class="col-6">
