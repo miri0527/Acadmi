@@ -38,7 +38,7 @@
 		학습 활동
 	</button>
 	<div id="submenu_3" class="sidebar-dropdown-content">
-		<a href="/student/lecture/reportList" id="report">과제</a>
+		<a href="/student/lecture/reportList?lectureNum=${lectureVO.lectureNum }" id="report">과제</a>
 		
 	</div>	
 </div>

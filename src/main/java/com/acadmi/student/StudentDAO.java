@@ -2,6 +2,7 @@ package com.acadmi.student;
 
 import java.time.Period;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,6 +10,7 @@ import com.acadmi.board.BoardVO;
 import com.acadmi.board.notice.NoticeVO;
 import com.acadmi.lecture.LectureVO;
 import com.acadmi.period.PeriodVO;
+import com.acadmi.report.ReportVO;
 import com.acadmi.student.lecture.StudentLectureVO;
 import com.acadmi.syllabus.ClassVO;
 import com.acadmi.util.Pagination;
@@ -45,4 +47,7 @@ public interface StudentDAO {
 	//수강신청,장바구니 막기
 	public PeriodVO getApplication() throws Exception;
 	public PeriodVO getFavorite() throws Exception;
+	
+	//과제
+	public List<ClassVO> getReportList(Map<String, Object> map)throws Exception;
 }

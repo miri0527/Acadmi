@@ -324,25 +324,50 @@
 	</select>
 	
 	<!-- 과제 리스트 -->
-	<select id="getReportList" resultMap="ReportList" parameterType="ReportVO">
-		SELECT * FROM REPORT R
+	<select id="getReportList" resultMap="ReportList" parameterType="Map">
+		SELECT  * FROM CLASS C
 			INNER JOIN 
 				REPORT_REGISTRATION RR 
-			ON 	R.REGISTRATIONNUM = RR.REGISTRATIONNUM 
+			ON RR.`ORDER` = C.ORDER
 				INNER JOIN 
-					CLASS C 
-				ON RR.ORDER = C.ORDER
+					REPORT R 
+				ON R.REGISTRATIONNUM = RR.REGISTRATIONNUM 
+					INNER JOIN 
+					STUDENT S 
+				ON R.USERNAME = S.USERNAME 	
 		WHERE R.USERNAME = #{username}
+		AND C.LECTURENUM = #{lectureNum}	
 	</select>
 
-	<resultMap type="ReportVO" id="ReportList">
-		<id column="REPORTNUM" property="reportNum"/>
-		<result column="REGISTRATIONNUM" property="registrationNum"/>
-		<result column="USERNAME" property="username"/>
-		<result column="CONTENTS" property="contents"/>
-		<result column="SCORE" property="score"/>
-		<result column="GRADING" property="grading"/>
-		<result column="SUBMISSIONDATE" property="submissiondate"/>
+	<resultMap type="ClassVO" id="ReportList">
+		<id column="SYLLABUSNUM" property="syllabusNum"/>
+		<result column="ORDER" property="order"/>
+		<result column="LECTURENUM" property="lectureNum"/>
+		<result column="SUBJECT" property="subject"/>
+		<result column="GOAL" property="goal"/>
+		<result column="CAPABILRY" property="capability"/>
+		<result column="NOTE" property="note"/>
+		<collection property="reportRegistrationVOs" javaType="List" ofType="ReportRegistrationVO">
+			<id column="REGISTRATIONNUM" property="registrationNum"/>
+			<result column="ORDER" property="order"/>
+			<result column="REPORTNAME" property="reportName"/>
+			<result column="CONTENTS" property="contents"/>
+			<result column="STARTADATE" property="startDate"/>
+			<result column="SUBMISSIONDATE" property="submissionDate"/>	
+				<collection property="reportVOs" javaType="List" ofType="ReportVO" >
+					<id column="REPORTNUM" property="reportNum"/>
+					<result column="USERNAME" property="username"/>
+					<result column="CONTENTS" property="contents"/>
+					<result column="SCORE" property="score"/>
+					<result column="GRADING" property="grading"/>
+					<result column="SUBMISSIONDATE" property="submissionDate"/>
+						 <collection property="studentVOs" javaType="List" ofType="StudentVO">
+						 	<id column="USERNAME" property="username"/>
+						 	<result column="NAME" property="name"/>
+						 </collection>
+				</collection>
+		</collection>
+			
 	</resultMap>
 	
   	

@@ -2,6 +2,7 @@ package com.acadmi.student;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import com.acadmi.board.notice.NoticeService;
 import com.acadmi.board.notice.NoticeVO;
 import com.acadmi.lecture.LectureVO;
 import com.acadmi.period.PeriodVO;
+import com.acadmi.report.ReportRegistrationVO;
+import com.acadmi.report.ReportVO;
 import com.acadmi.student.lecture.StudentLectureVO;
 import com.acadmi.syllabus.ClassVO;
 import com.acadmi.util.Pagination;
@@ -173,8 +176,32 @@ public class StudentController {
 	
 	//과제 열람
 	@GetMapping("lecture/reportList")
-	public ModelAndView getReportList() throws Exception {
+	public ModelAndView getReportList(ClassVO classVO, ReportVO reportVO , LectureVO lectureVO, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
+		
+		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
+		Authentication authentication = contextImpl.getAuthentication();
+		
+		
+		classVO.setLectureNum(lectureVO.getLectureNum());
+		reportVO.setUsername(authentication.getName());
+	
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("lectureNum", classVO.getLectureNum());
+		map.put("username", reportVO.getUsername());
+		
+		log.error("map:::{}", map.get("lectureNum"));
+		log.error("map::{}",map.get("username"));
+		
+		List<ClassVO> ar = studentService.getReportList(map);
+	
+		log.error("num::{}", ar.get(0).getReportRegistrationVOs().get(1).getRegistrationNum());
+		
+		mv.addObject("list", ar);
+		mv.setViewName("student/lecture/reportList"	);
+		
 		
 		return mv;
 	}

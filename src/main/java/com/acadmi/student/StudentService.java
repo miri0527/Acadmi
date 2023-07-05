@@ -11,6 +11,7 @@ import com.acadmi.board.BoardVO;
 import com.acadmi.board.notice.NoticeVO;
 import com.acadmi.lecture.LectureVO;
 import com.acadmi.period.PeriodVO;
+import com.acadmi.report.ReportVO;
 import com.acadmi.student.lecture.StudentLectureVO;
 import com.acadmi.syllabus.ClassVO;
 import com.acadmi.util.Pagination;
@@ -97,4 +98,10 @@ public class StudentService {
     	return studentDAO.getFavorite();
     }
     
+    //과제
+    public List<ClassVO> getReportList(Map<String,Object> map) throws Exception {
+    	
+    	return studentDAO.getReportList(map);
+    }
+    	
  } 

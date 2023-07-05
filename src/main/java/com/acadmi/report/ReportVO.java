@@ -17,7 +17,7 @@ public class ReportVO {
 	private String contents;
 	private Float score;
 	private Integer grading;
-	private Date submissiondate;
+	private Date submissionDate;
 	
 	private List<StudentVO> studentVOs;
 }

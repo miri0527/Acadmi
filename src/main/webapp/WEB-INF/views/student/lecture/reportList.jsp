@@ -54,6 +54,52 @@
 							</div>
 						</div>
 						
+ 						<!-- table-body start -->
+       						<div class="card-body" id="reportList">
+         			<table class="table table-bordered" style="text-align: center;">
+           				<thead style="background-color: #f8f9fa;color:#17a2b8;">
+	             			<tr>
+		                    	<th>차수</th>
+		                    	<th>과제 제목</th>
+		                    	<th>제출일</th>
+		                    	<th>작성자</th>
+	                    		<th></th>
+			                </tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${list}" var="classVO">
+								
+									<c:set var="order" value="${classVO.order }"></c:set>
+									<c:forEach items="${classVO.reportRegistrationVOs}" var="reportRegistrationVO">
+										
+										<c:set var="reportName" value="${reportRegistrationVO.reportName }"></c:set>
+										<c:forEach items="${reportRegistrationVO.reportVOs}" var="reportVO">
+											<tr>
+												<c:set var="submissionDate" value="${reportVO.submissionDate }"></c:set>
+												<c:forEach items="${reportVO.studentVOs}" var="studentVO">
+													<c:set var="name" value="${studentVO.name }"></c:set>
+												</c:forEach>
+													<td>${order}</td>
+													<td>${reportName }</td>
+													<td>${submissionDate }</td>
+													<td>${name }</td>
+													<td><button type="button" class="btn btn-primary">수정</button> </td>
+											</tr>
+										</c:forEach>
+										
+									</c:forEach>
+								
+							</c:forEach>
+						</tbody>
+						
+   	 				
+						
+             				
+					</table>
+				</div>
+         		<!-- table-body end -->
+
+						
 						
 					</div>
 					<!-- Contents end -->
