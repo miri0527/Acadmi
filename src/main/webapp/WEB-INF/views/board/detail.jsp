@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
 	<title>Acadmi</title>
 	<!-- CSS/favicon 적용 -->
 	<c:import url="../temp/style.jsp"></c:import>

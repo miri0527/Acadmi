@@ -32,6 +32,9 @@ public class Pagination {
 	private Long lectureNum;
 	private String name;
 	
+	//과제
+	private Long order;
+	private String reportName;
 
 	//강의실 배정 조회
 	private Integer status;

@@ -15,8 +15,8 @@ public class ReportRegistrationVO {
 	private Integer order;
 	private String reportName;
 	private String contents;
-	private Date startDate;
-	private Date submissionDate;
+	private java.util.Date startDate;
+	private java.util.Date submissionDate;
 	
 	private List<ReportVO> reportVOs;
 	

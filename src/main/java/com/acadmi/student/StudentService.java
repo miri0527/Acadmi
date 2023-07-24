@@ -98,10 +98,29 @@ public class StudentService {
     	return studentDAO.getFavorite();
     }
     
-    //과제
-    public List<ClassVO> getReportList(Map<String,Object> map) throws Exception {
-    	
+    
+    //과제 리스트
+    public List<ClassVO> getReportList(Map<String, Object> map) throws Exception {
     	return studentDAO.getReportList(map);
+    }
+    
+    //내가 제출한 과제
+    public List<ClassVO> getMyReportList(Map<String,Object> map) throws Exception {
+    	Long totalCount = studentDAO.getReportTotalCount();
+    	
+    	Pagination pagination = (Pagination) map.get("pagination");
+    	
+    	pagination.makeNum(totalCount);
+    	pagination.makeStartRow();
+    	
+    	map.put("startRow", pagination.getStartRow());
+    	map.put("perPage", pagination.getPerPage());
+    	map.put("reportName", pagination.getReportName());
+    	map.put("order", pagination.getOrder());
+    	
+    	List<ClassVO> ar = studentDAO.getMyReportList(map);
+    	
+    	return ar;
     }
     	
  } 

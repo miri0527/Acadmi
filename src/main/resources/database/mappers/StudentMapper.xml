@@ -17,7 +17,7 @@
 		WHERE l.`YEAR` = DATE_FORMAT(NOW(), '%Y') 
 			AND (
 			  (l.SEMESTER = 1 AND DATE_FORMAT(NOW(), '%m') BETWEEN 3 AND 6)
-			  OR (l.SEMESTER = 2 AND DATE_FORMAT(NOW(), '%m') BETWEEN 7 AND 12)
+			  OR (l.SEMESTER = 2 AND DATE_FORMAT(NOW(), '%m') BETWEEN 9 AND 12)
 		)
 		AND sl.USERNAME = #{username}
 		AND l.STATUS=1
@@ -324,8 +324,41 @@
 	</select>
 	
 	<!-- 과제 리스트 -->
-	<select id="getReportList" resultMap="ReportList" parameterType="Map">
-		SELECT  * FROM CLASS C
+	<select id="getReportList"  resultMap="ReportList" parameterType="Map">
+			SELECT  * FROM CLASS C
+			INNER JOIN 	
+				REPORT_REGISTRATION RR 
+			ON RR.SYLLABUSNUM = C.SYLLABUSNUM 
+			AND RR.ORDER = C.`ORDER` 
+		WHERE  C.LECTURENUM=#{lectureNum}
+		<if test="reportName!=null and !reportName.equals('')">
+			AND REPORTNAME LIKE CONCAT('%',#{reportName},'%')
+		</if>
+	</select>
+	
+	<!-- 과제 상세 -->
+	<select id="getReportDetail" resultMap="ReportList" parameterType="Map" >
+		SELECT *  FROM CLASS C
+			INNER JOIN 
+				REPORT_REGISTRATION RR 
+			ON RR.`ORDER` = C.ORDER
+				INNER JOIN 
+					REPORT R 
+				ON R.REGISTRATIONNUM = RR.REGISTRATIONNUM 
+					INNER JOIN 
+					STUDENT S 
+				ON R.USERNAME = S.USERNAME 	
+		WHERE R.USERNAME = #{username}
+		AND C.LECTURENUM = #{lectureNum}
+	</select>
+	
+	<!-- 내가 낸 과제 리스트 -->
+	<select id="getReportTotalCount" resultType="Long" >
+		SELECT COUNT(REPORTNUM) FROM REPORT
+	</select>
+	
+	<select id="getMyReportList" resultMap="ReportList" parameterType="Map">
+		SELECT *  FROM CLASS C
 			INNER JOIN 
 				REPORT_REGISTRATION RR 
 			ON RR.`ORDER` = C.ORDER
@@ -337,11 +370,17 @@
 				ON R.USERNAME = S.USERNAME 	
 		WHERE R.USERNAME = #{username}
 		AND C.LECTURENUM = #{lectureNum}	
+		<if test="reportName!=null and !reportName.equals('')">
+			AND REPORTNAME LIKE CONCAT('%',#{reportName},'%')
+		</if>
+		<if test="order !=null and !order.equals('')">
+			AND RR.ORDER = #{order}
+		</if>
+		LIMIT #{startRow}, #{perPage}
 	</select>
 
 	<resultMap type="ClassVO" id="ReportList">
 		<id column="SYLLABUSNUM" property="syllabusNum"/>
-		<result column="ORDER" property="order"/>
 		<result column="LECTURENUM" property="lectureNum"/>
 		<result column="SUBJECT" property="subject"/>
 		<result column="GOAL" property="goal"/>
@@ -369,6 +408,8 @@
 		</collection>
 			
 	</resultMap>
+	
+	
 	
   	
   </mapper>

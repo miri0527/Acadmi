@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -175,15 +176,44 @@ public class StudentController {
 	}
 	
 	//과제 열람
-	@GetMapping("lecture/reportList")
-	public ModelAndView getReportList(ClassVO classVO, ReportVO reportVO , LectureVO lectureVO, HttpSession session) throws Exception {
+	@GetMapping("lecture/report/list")
+	public ModelAndView getReportList(ClassVO classVO, ReportVO reportVO, ReportRegistrationVO registrationVO, LectureVO lectureVO, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
 		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
 		Authentication authentication = contextImpl.getAuthentication();
 		
+		lectureVO = studentService.getLectureDetail(lectureVO);
+		classVO.setLectureNum(lectureVO.getLectureNum());
 		
+	
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("lectureNum", classVO.getLectureNum());
+		map.put("reportName", registrationVO.getReportName());
+		
+		List<ClassVO> ar = studentService.getReportList(map);
+		
+		mv.addObject("list", ar);
+		mv.addObject("lecture", lectureVO);
+	
+	
+		mv.setViewName("student/lecture/report/list");
+		
+		return mv;
+	}
+	
+	//내가 제출한 과제 열람
+	@GetMapping("lecture/myReportList")
+	public ModelAndView getMyReportList(ClassVO classVO, ReportVO reportVO , LectureVO lectureVO, Pagination pagination, HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
+		Authentication authentication = contextImpl.getAuthentication();
+		
+		lectureVO = studentService.getLectureDetail(lectureVO);
 		classVO.setLectureNum(lectureVO.getLectureNum());
 		reportVO.setUsername(authentication.getName());
 	
@@ -191,20 +221,32 @@ public class StudentController {
 		
 		map.put("lectureNum", classVO.getLectureNum());
 		map.put("username", reportVO.getUsername());
+		map.put("pagination", pagination);
 		
-		log.error("map:::{}", map.get("lectureNum"));
-		log.error("map::{}",map.get("username"));
 		
-		List<ClassVO> ar = studentService.getReportList(map);
-	
-		log.error("num::{}", ar.get(0).getReportRegistrationVOs().get(1).getRegistrationNum());
+		
+		
+		List<ClassVO> ar = studentService.getMyReportList(map);
 		
 		mv.addObject("list", ar);
-		mv.setViewName("student/lecture/reportList"	);
+		mv.addObject("lecture", lectureVO);
+	
+	
+		mv.setViewName("student/lecture/myReportList");
 		
 		
 		return mv;
 	}
+	
+	@GetMapping("lecture/reportAdd")
+	public ModelAndView setReportAdd(LectureVO lectureVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("student/lecture/reportAdd");
+		
+		return mv;
+	}
+	
 
 
 	

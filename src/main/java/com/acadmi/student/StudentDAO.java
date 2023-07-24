@@ -48,6 +48,10 @@ public interface StudentDAO {
 	public PeriodVO getApplication() throws Exception;
 	public PeriodVO getFavorite() throws Exception;
 	
-	//과제
-	public List<ClassVO> getReportList(Map<String, Object> map)throws Exception;
+	//과제 리스트
+	public List<ClassVO> getReportList(Map<String, Object> map) throws Exception;
+ 	
+	//내가 제출한 과제
+	public Long getReportTotalCount() throws Exception;
+	public List<ClassVO> getMyReportList(Map<String, Object> map)throws Exception;
 }
