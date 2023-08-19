@@ -55,7 +55,7 @@
 						</div>
 						<div class="card">
 							<div class="card-header">
-								<form action="./reportList" id="search-form">
+								<form action="./myReportList" id="search-form">
 									<input type="hidden" name="lectureNum" value="${lecture.lectureNum}">
 									<div class="card-title">
 					            		<label class="mx-2 my-2">주차</label>
@@ -125,17 +125,17 @@
 						<ul class="pagination pagination-sm mx-auto">
 							<c:if test="${pagination.pre}">
 								<li class="page-item">
-									<a class="page-link" href="./reportList?page=1&lectureNum=${lecture.lectureNum}&order=${pagination.order}&reportName=${pagination.reportName}" aria-label="Previous" data-board-page="1" style="color:#17a2b8;">
+									<a class="page-link" href="./myReportList?page=1&lectureNum=${lecture.lectureNum}&order=${pagination.order}&reportName=${pagination.reportName}" aria-label="Previous" data-board-page="1" style="color:#17a2b8;">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
 							</c:if>
 							<c:forEach begin="${pagination.startNum}" end="${pagination.lastNum}" var="i">
-								<li class="page-item"><a class="page-link" href="./reportList?page=1&lectureNum=${lecture.lectureNum}&order=${pagination.order}&reportName=${pagination.reportName}" data-board-page="${i}" style="color:#17a2b8;">${i}</a></li>
+								<li class="page-item"><a class="page-link" href="./myReportList?page=1&lectureNum=${lecture.lectureNum}&order=${pagination.order}&reportName=${pagination.reportName}" data-board-page="${i}" style="color:#17a2b8;">${i}</a></li>
 							</c:forEach>	
 							<c:if test="${pagination.next }">
 								<li class="page-item">
-									<a class="page-link" href="./reportList?page=1&lectureNum=${lecture.lectureNum}&order=${pagination.order}&reportName=${pagination.reportName}" aria-label="Next" data-board-page="${pagination.totalPage}" style="color:#17a2b8;">
+									<a class="page-link" href="./myReportList?page=1&lectureNum=${lecture.lectureNum}&order=${pagination.order}&reportName=${pagination.reportName}" aria-label="Next" data-board-page="${pagination.totalPage}" style="color:#17a2b8;">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
