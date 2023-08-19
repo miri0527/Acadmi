@@ -204,6 +204,25 @@ public class StudentController {
 		return mv;
 	}
 	
+	//과제 상세 페이지
+	@GetMapping("lecture/report/detail")
+	public ModelAndView getReportDetail(ReportRegistrationVO reportRegistrationVO, LectureVO lectureVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		lectureVO = studentService.getLectureDetail(lectureVO);
+		
+		reportRegistrationVO = studentService.getReportDetail(reportRegistrationVO);
+		
+		mv.addObject("reportRegostrationVO", reportRegistrationVO);
+		mv.addObject("lecture", lectureVO);
+		mv.setViewName("student/lecture/report/detail");
+		
+		return mv;
+	
+	}
+	
+
+	
 	//내가 제출한 과제 열람
 	@GetMapping("lecture/myReportList")
 	public ModelAndView getMyReportList(ClassVO classVO, ReportVO reportVO , LectureVO lectureVO, Pagination pagination, HttpSession session) throws Exception {
@@ -246,7 +265,6 @@ public class StudentController {
 		
 		return mv;
 	}
-	
 
 
 	

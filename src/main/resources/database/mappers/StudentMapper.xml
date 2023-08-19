@@ -325,32 +325,55 @@
 	
 	<!-- 과제 리스트 -->
 	<select id="getReportList"  resultMap="ReportList" parameterType="Map">
-			SELECT  * FROM CLASS C
-			INNER JOIN 	
-				REPORT_REGISTRATION RR 
-			ON RR.SYLLABUSNUM = C.SYLLABUSNUM 
-			AND RR.ORDER = C.`ORDER` 
-		WHERE  C.LECTURENUM=#{lectureNum}
+			SELECT * FROM CLASS C 
+				RIGHT OUTER JOIN
+					REPORT_REGISTRATION RR 
+				ON RR.SYLLABUSNUM  = C.SYLLABUSNUM 
+				AND RR.`ORDER`  = C.`ORDER` 
+					LEFT OUTER JOIN 
+						REPORT R 
+					ON R.REGISTRATIONNUM  = RR.REGISTRATIONNUM 
+			WHERE C.LECTURENUM =#{lectureNum}
 		<if test="reportName!=null and !reportName.equals('')">
 			AND REPORTNAME LIKE CONCAT('%',#{reportName},'%')
 		</if>
 	</select>
 	
-	<!-- 과제 상세 -->
-	<select id="getReportDetail" resultMap="ReportList" parameterType="Map" >
-		SELECT *  FROM CLASS C
-			INNER JOIN 
-				REPORT_REGISTRATION RR 
-			ON RR.`ORDER` = C.ORDER
-				INNER JOIN 
-					REPORT R 
-				ON R.REGISTRATIONNUM = RR.REGISTRATIONNUM 
-					INNER JOIN 
-					STUDENT S 
-				ON R.USERNAME = S.USERNAME 	
-		WHERE R.USERNAME = #{username}
-		AND C.LECTURENUM = #{lectureNum}
+	<!-- 과제 상세 페이지  -->
+	<select id="getReportDetail" resultMap="ReportDetail" parameterType="ReportRegistrationVO" >
+		SELECT * FROM REPORT_REGISTRATION RR
+			LEFT OUTER JOIN 
+				REPORT R 
+			ON RR.REGISTRATIONNUM  = R.REGISTRATIONNUM 
+				LEFT OUTER JOIN
+					REPORTFILES RF 
+				ON R.REPORTNUM = RF.REPORTNUM 
+		WHERE RR.REGISTRATIONNUM =#{registrationNum}
 	</select>
+		
+
+	<resultMap type="ReportRegistrationVO" id="ReportDetail">
+		<id column="REGISTRATIONNUM" property="registrationNum"/>
+		<result column="SYLLABUSNUM" property="syllabusNum"/>
+		<result column="ORDER" property="order"/>
+		<result column="REPORTNAME" property="reportName"/>
+		<result column="CONTENTS" property="contents"/>
+		<result column="STARTDATE" property="startDate"/>
+		<result column="SUBMISSIONDATE" property="submissionDate"/>
+		<collection property="reportVOs" javaType="List" ofType="ReportVO">
+			<id column="REPORTNUM" property="reportNum"/>
+			<result column="USERNAME" property="username"/>
+			<result column="CONTENTS" property="contents"/>
+			<result column="SCORE" property="score"/>
+			<result column="GRADING" property="grading"/>
+			<result column="SUBMISSIONDATE" property="submissionDate"/>
+			<collection property="reportFilesVOs" javaType="List" ofType="ReportFilesVO">
+				<id column="FILENUM" property="fileNum"/>
+				<result column="FILENAME" property="fileName"/>
+				<result column="ORINAME" property="oriName"/>
+			</collection>
+		</collection>
+	</resultMap>
 	
 	<!-- 내가 낸 과제 리스트 -->
 	<select id="getReportTotalCount" resultType="Long" >

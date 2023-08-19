@@ -20,4 +20,5 @@ public class ReportVO {
 	private Date submissionDate;
 	
 	private List<StudentVO> studentVOs;
+	private List<ReportFilesVO> reportFilesVOs;
 }

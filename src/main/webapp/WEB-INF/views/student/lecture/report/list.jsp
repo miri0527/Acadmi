@@ -25,8 +25,7 @@
 	<!-- CSS/favicon 적용 -->
 	<c:import url="../../../temp/style.jsp"></c:import>
 	<!-- CSS/favicon 끝 -->
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
 </head>
 <body class="hold-transition si	debar-mini layout-fixed">
 <div class="wrapper">
@@ -97,6 +96,7 @@
 										
 												<c:forEach items="${list}" var="classVO">
 													<c:forEach items="${classVO.reportRegistrationVOs}" var="reportRegistrationVO">
+														<c:set var="registrationNum" value="${reportRegistrationVO.registrationNum }"></c:set>
 														<c:set var="reportName" value="${reportRegistrationVO.reportName}"></c:set>
 														<c:set var="submissionDate" value="${reportRegistrationVO. submissionDate}"></c:set>
 														<c:set var="order" value="${ reportRegistrationVO.order}"></c:set>
@@ -107,21 +107,20 @@
 																		
 																			<c:if test="${order eq 1 }">
 																				<div class="col">
-																					<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
+																					<a href="./detail?lectureNum=${lecture.lectureNum}&registrationNum=${registrationNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 																				</div>
 																					<div class="col">
 																						<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 																						<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 																						<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 																						</span>
-																						<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-																						<c:if test="${score!=0}">
+																						
+																						<c:if test="${score ne null }">
+																							<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 																							<span style="padding-left : 10px;">${score}점</span>
+																							<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 																						</c:if>
-																						<c:if test="${score == 0}">
-																							<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-																						</c:if>
-																						<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+																						
 																						<c:if test="${grading == 0 }">
 																							<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 																						</c:if>
@@ -150,21 +149,21 @@
 											<div class="wrapper" style="padding : 10px;">
 												<c:if test="${order eq 2 }">
 													<div class="col">
-														<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
+														<a href="./detail?lectureNum=${lecture.lectureNum}&registrationNum=${registrationNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 													</div>
 													<div class="col">
 														<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 														<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 														<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 														</span>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-														<c:if test="${score!=0}">
+														<c:if test="${score ne null }">
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 															<span style="padding-left : 10px;">${score}점</span>
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 														</c:if>
-														<c:if test="${score == 0}">
-															<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-														</c:if>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+														 
+														<span>${reportRegistra }</span>
+														
 														<c:if test="${grading == 0 }">
 															<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 														</c:if>
@@ -188,21 +187,19 @@
 											<div class="wrapper" style="padding : 10px;">
 												<c:if test="${order eq 3 }">
 													<div class="col">
-														<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
+														<a href="./detail?lectureNum=${lecture.lectureNum }&registrationNum=${registrationNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 													</div>
 													<div class="col">
 														<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 														<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 														<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 														</span>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-														<c:if test="${score!=0}">
+														<c:if test="${score ne null }">
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 															<span style="padding-left : 10px;">${score}점</span>
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 														</c:if>
-														<c:if test="${score == 0}">
-															<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-														</c:if>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+														
 														<c:if test="${grading == 0 }">
 															<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 														</c:if>
@@ -226,21 +223,19 @@
 											<div class="wrapper" style="padding : 10px;">
 												<c:if test="${order eq 4 }">
 													<div class="col">
-														<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
+														<a href="./detail?lectureNum=${lecture.lectureNum}&registrationNum=${registrationNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 													</div>
 													<div class="col">
 														<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 														<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 														<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 														</span>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-														<c:if test="${score!=0}">
+														<c:if test="${score ne null }">
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 															<span style="padding-left : 10px;">${score}점</span>
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 														</c:if>
-														<c:if test="${score == 0}">
-															<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-														</c:if>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+														
 														<c:if test="${grading == 0 }">
 															<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 														</c:if>
@@ -264,21 +259,19 @@
 											<div class="wrapper" style="padding : 10px;">
 												<c:if test="${order eq 5 }">
 													<div class="col">
-														<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
+														<a href="./detail?lectureNum=${lecture.lectureNum}&registrationNum=${registrationNum}"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 													</div>
 													<div class="col">
 														<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 														<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 														<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 														</span>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-														<c:if test="${score!=0}">
+														<c:if test="${score ne null }">
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 															<span style="padding-left : 10px;">${score}점</span>
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 														</c:if>
-														<c:if test="${score == 0}">
-															<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-														</c:if>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+														
 														<c:if test="${grading == 0 }">
 															<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 														</c:if>
@@ -286,7 +279,7 @@
 															<span style="padding-left : 10px; font-weight : bold; font-size : 13px;">채점 완료</span>
 														
 														</c:if>
-														
+						
 													</div>
 												</c:if>
 											</div>
@@ -302,21 +295,19 @@
 											<div class="wrapper" style="padding : 10px;">
 												<c:if test="${order eq 6 }">
 													<div class="col">
-														<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
+														<a href="./detail?lectureNum=${lecture.lectureNum}&registrationNum=${registrationNum}"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 													</div>
 													<div class="col">
 														<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 														<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 														<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 														</span>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-														<c:if test="${score!=0}">
+														<c:if test="${score ne null }">
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 															<span style="padding-left : 10px;">${score}점</span>
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 														</c:if>
-														<c:if test="${score == 0}">
-															<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-														</c:if>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+														
 														<c:if test="${grading == 0 }">
 															<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 														</c:if>
@@ -340,21 +331,18 @@
 											<div class="wrapper" style="padding : 10px;">
 												<c:if test="${order eq 7 }">
 													<div class="col">
-														<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
-													</div>
+														<a href="./detail?lectureNum=${lecture.lectureNum}&registrationNum=${registrationNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 													<div class="col">
 														<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 														<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 														<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 														</span>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-														<c:if test="${score!=0}">
+														<c:if test="${score ne null }">
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 															<span style="padding-left : 10px;">${score}점</span>
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 														</c:if>
-														<c:if test="${score == 0}">
-															<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-														</c:if>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+														
 														<c:if test="${grading == 0 }">
 															<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 														</c:if>
@@ -378,21 +366,19 @@
 											<div class="wrapper" style="padding : 10px;">
 												<c:if test="${order eq 8 }">
 													<div class="col">
-														<a href="./detail?lectureNum=${lecture.lectureNum }"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
+														<a href="./detail?lectureNum=${lecture.lectureNum}&registrationNum=${registrationNum}"><span style="font-weight : bold; font-size : 20px;">${reportName }</span></a>
 													</div>
 													<div class="col">
 														<span style="font-weight : bold; font-size : 13px;" >마감일</span>
 														<span style="font-weight : bold; font-size : 13px; padding-left : 10px;" >
 														<fmt:formatDate value="${submissionDate }" type="both" pattern="yyyy년 MM월 dd일 a hh:mm"  />
 														</span>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
-														<c:if test="${score!=0}">
+														<c:if test="${score ne null }">
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 															<span style="padding-left : 10px;">${score}점</span>
+															<span style="border-right: 1px solid black; padding-left : 10px;"></span>
 														</c:if>
-														<c:if test="${score == 0}">
-															<span style="padding-left : 10px; font-size : 13px;">점수 없음</span>
-														</c:if>
-														<span style="border-right: 1px solid black; padding-left : 10px;"></span>
+														
 														<c:if test="${grading == 0 }">
 															<span style="padding-left : 10px; font-size : 13px;">미채점</span>
 														</c:if>
@@ -408,6 +394,7 @@
 									</div>
 									
 								</c:if>
+								
 							</div>		
 		                </div>
 		             </div>

@@ -11,6 +11,7 @@ import com.acadmi.board.BoardVO;
 import com.acadmi.board.notice.NoticeVO;
 import com.acadmi.lecture.LectureVO;
 import com.acadmi.period.PeriodVO;
+import com.acadmi.report.ReportRegistrationVO;
 import com.acadmi.report.ReportVO;
 import com.acadmi.student.lecture.StudentLectureVO;
 import com.acadmi.syllabus.ClassVO;
@@ -103,6 +104,13 @@ public class StudentService {
     public List<ClassVO> getReportList(Map<String, Object> map) throws Exception {
     	return studentDAO.getReportList(map);
     }
+    
+    //과제 상세 페이지
+    public ReportRegistrationVO getReportDetail(ReportRegistrationVO reportRegistrationVO) throws Exception {
+    	return studentDAO.getReportDetail(reportRegistrationVO);
+    }
+    
+
     
     //내가 제출한 과제
     public List<ClassVO> getMyReportList(Map<String,Object> map) throws Exception {

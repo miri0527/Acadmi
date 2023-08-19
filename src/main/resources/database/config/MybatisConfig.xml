@@ -54,6 +54,7 @@
 		
 		<typeAlias type="com.acadmi.report.ReportVO" alias="ReportVO"/>
 		<typeAlias type="com.acadmi.report.ReportRegistrationVO" alias="ReportRegistrationVO"/>
+		<typeAlias type="com.acadmi.report.ReportFilesVO" alias="ReportFilesVO"/>
   		
   		
   	</typeAliases>

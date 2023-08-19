@@ -90,6 +90,7 @@ public class LectureController {
 		mv.addObject("year", calculateCurrentYear());
 		mv.addObject("semester", calculateCurrentSemester());
 		mv.setViewName("lecture/list");
+		
 		return mv;
 	}
 	
