@@ -72,11 +72,26 @@
 									
 								</div>
 								<div>
-								<a href="./list?lectureNum=${lecture.lectureNum}" class="btn btn-light float-right" style="margin-right: 5px">목록</a>
+									<a href="./list?lectureNum=${lecture.lectureNum}" class="btn btn-light float-right" style="margin-right: 5px">목록</a>
+								</div>
+								<div>
+								<c:forEach items="${reportRegostrationVO.reportVOs}" var="reportVO">
+									<c:if test="${reportVO.reportNum eq null }">
+										<a href="./add?lectureNum=${lecture.lectureNum}&registrationNum=${reportRegostrationVO.registrationNum}" class="btn btn-info float-right" style="margin-right: 10px">제출</a>
+									</c:if>
+									<c:if test="${reportVO.reportNum ne null }">
+										
+									</c:if>
+									
+								</c:forEach>
+									
 								</div>
 								
 							</div>
+							
 						</div>
+						
+						
 					</div>
 					
 			</div>

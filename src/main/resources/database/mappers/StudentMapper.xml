@@ -325,15 +325,15 @@
 	
 	<!-- 과제 리스트 -->
 	<select id="getReportList"  resultMap="ReportList" parameterType="Map">
-			SELECT * FROM CLASS C 
-				RIGHT OUTER JOIN
-					REPORT_REGISTRATION RR 
-				ON RR.SYLLABUSNUM  = C.SYLLABUSNUM 
-				AND RR.`ORDER`  = C.`ORDER` 
-					LEFT OUTER JOIN 
-						REPORT R 
-					ON R.REGISTRATIONNUM  = RR.REGISTRATIONNUM 
-			WHERE C.LECTURENUM =#{lectureNum}
+		SELECT  C.*, RR.* , R.CONTENTS AS REPORTCONTNES, R.SUBMISSIONDATE AS REPORTSUBMISSIONDATE, R.REPORTNUM , R.REGISTRATIONNUM , R.SCORE , R.GRADING FROM CLASS C 
+			RIGHT OUTER JOIN
+				REPORT_REGISTRATION RR 
+			ON RR.SYLLABUSNUM  = C.SYLLABUSNUM 
+			AND RR.`ORDER`  = C.`ORDER` 
+				LEFT OUTER JOIN 
+					REPORT R 
+				ON R.REGISTRATIONNUM  = RR.REGISTRATIONNUM 
+		WHERE C.LECTURENUM = #{lectureNum}
 		<if test="reportName!=null and !reportName.equals('')">
 			AND REPORTNAME LIKE CONCAT('%',#{reportName},'%')
 		</if>
@@ -350,7 +350,12 @@
 				ON R.REPORTNUM = RF.REPORTNUM 
 		WHERE RR.REGISTRATIONNUM =#{registrationNum}
 	</select>
-		
+	
+	<!-- 과제 등룍 -->
+	<insert id="setReportAdd" parameterType="ReportVO" >
+		INSERT INTO REPORT 
+		VALUES(0, #{registrationNum}, #{username}, #{contents}, 0, 0, NOW())
+	</insert>
 
 	<resultMap type="ReportRegistrationVO" id="ReportDetail">
 		<id column="REGISTRATIONNUM" property="registrationNum"/>
@@ -381,17 +386,14 @@
 	</select>
 	
 	<select id="getMyReportList" resultMap="ReportList" parameterType="Map">
-		SELECT *  FROM CLASS C
+		SELECT R.CONTENTS AS REPORTCONTENTS, R.SUBMISSIONDATE AS REPORTSUBMISSIONDATE, C.*,RR.* FROM CLASS C
 			INNER JOIN 
 				REPORT_REGISTRATION RR 
 			ON RR.`ORDER` = C.ORDER
 				INNER JOIN 
 					REPORT R 
 				ON R.REGISTRATIONNUM = RR.REGISTRATIONNUM 
-					INNER JOIN 
-					STUDENT S 
-				ON R.USERNAME = S.USERNAME 	
-		WHERE R.USERNAME = #{username}
+		WHERE R.USERNAME =#{username}
 		AND C.LECTURENUM = #{lectureNum}	
 		<if test="reportName!=null and !reportName.equals('')">
 			AND REPORTNAME LIKE CONCAT('%',#{reportName},'%')
@@ -419,18 +421,15 @@
 				<collection property="reportVOs" javaType="List" ofType="ReportVO" >
 					<id column="REPORTNUM" property="reportNum"/>
 					<result column="USERNAME" property="username"/>
-					<result column="CONTENTS" property="contents"/>
+					<result column="REPORTCONTENTS" property="contents"/>
 					<result column="SCORE" property="score"/>
 					<result column="GRADING" property="grading"/>
-					<result column="SUBMISSIONDATE" property="submissionDate"/>
-						 <collection property="studentVOs" javaType="List" ofType="StudentVO">
-						 	<id column="USERNAME" property="username"/>
-						 	<result column="NAME" property="name"/>
-						 </collection>
+					<result column="REPORTSUBMISSIONDATE" property="submissionDate"/>
 				</collection>
 		</collection>
 			
 	</resultMap>
+
 	
 	
 	

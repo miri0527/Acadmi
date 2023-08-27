@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -198,6 +199,7 @@ public class StudentController {
 		mv.addObject("list", ar);
 		mv.addObject("lecture", lectureVO);
 	
+		log.error("list::{}", ar.get(0).getReportRegistrationVOs().get(0).getReportName());
 	
 		mv.setViewName("student/lecture/report/list");
 		
@@ -221,7 +223,49 @@ public class StudentController {
 	
 	}
 	
+	//과제 등록
+	@GetMapping("lecture/report/add")
+	public ModelAndView setReportAdd(LectureVO lectureVO, ReportVO reportVO, ReportRegistrationVO registrationVO, HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
+		Authentication authentication = contextImpl.getAuthentication();
+		
+		reportVO.setUsername(authentication.getName());
+		reportVO.setReportNum(registrationVO.getRegistrationNum());
+		
+		lectureVO = studentService.getLectureDetail(lectureVO);
+		
+		mv.addObject("reporVO", reportVO);
+		mv.addObject("lecture", lectureVO);
+		mv.setViewName("student/lecture/report/add");
+		
+		return mv;
+	}
 
+	@PostMapping("lecture/report/add")
+	public ModelAndView setReportAdd(ReportVO reportVO, LectureVO lectureVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		lectureVO = studentService.getLectureDetail(lectureVO);
+		int result = studentService.setReportAdd(reportVO);
+		
+		String message= "등록 실패";
+		
+		if(result > 0) {
+			message = "과제가 등록되었습니다.";
+			
+		}
+		
+		mv.addObject("result", message);
+		mv.setViewName("common/result");
+		
+		mv.addObject("url", "./detail?lectureNum=" + lectureVO.getLectureNum() + "&registrationNum=" + reportVO.getRegistrationNum());
+		
+		return mv;
+		
+	}
 	
 	//내가 제출한 과제 열람
 	@GetMapping("lecture/myReportList")
@@ -242,10 +286,8 @@ public class StudentController {
 		map.put("username", reportVO.getUsername());
 		map.put("pagination", pagination);
 		
-		
-		
-		
 		List<ClassVO> ar = studentService.getMyReportList(map);
+		
 		
 		mv.addObject("list", ar);
 		mv.addObject("lecture", lectureVO);
@@ -257,14 +299,6 @@ public class StudentController {
 		return mv;
 	}
 	
-	@GetMapping("lecture/reportAdd")
-	public ModelAndView setReportAdd(LectureVO lectureVO) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("student/lecture/reportAdd");
-		
-		return mv;
-	}
 
 
 	

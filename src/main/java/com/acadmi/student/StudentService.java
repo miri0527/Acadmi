@@ -110,6 +110,10 @@ public class StudentService {
     	return studentDAO.getReportDetail(reportRegistrationVO);
     }
     
+    //과제 등록
+    public int setReportAdd(ReportVO reportVO) throws Exception {
+    	return studentDAO.setReportAdd(reportVO);
+    }
 
     
     //내가 제출한 과제

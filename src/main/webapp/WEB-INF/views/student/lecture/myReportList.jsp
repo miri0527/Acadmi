@@ -49,7 +49,7 @@
 						<div class="row" style="padding-top:10px">
 							<div class="col-12">
 								<div class="card">
-									<h3 class="my-3 mx-3">등록된 과제</h3>
+									<h3 class="my-3 mx-3">내가 제출한 과제</h3>
 								</div>
 							</div>
 						</div>
@@ -80,7 +80,7 @@
            				<thead style="background-color: #f8f9fa;color:#17a2b8;">
 	             			<tr>
 		                    	<th></th>
-		                    	<th>과제 제목</th>
+		                    	<th>과제 내용</th>
 		                    	<th>제출일</th>
 		                    
 	                    	
@@ -92,17 +92,16 @@
 									<c:forEach items="${classVO.reportRegistrationVOs}" var="reportRegistrationVO">
 										
 										<c:set var="order" value="${reportRegistrationVO.order }"></c:set>
-										<c:set var="reportName" value="${reportRegistrationVO.reportName }"></c:set>
-										
 										<c:forEach items="${reportRegistrationVO.reportVOs}" var="reportVO">
 											<tr>
-												<c:set var="submissionDate" value="${reportVO.submissionDate }"></c:set>
+												<c:set var="submissionDate" value="${reportVO.submissionDate}"></c:set>
+												<c:set var="reportContents" value="${reportVO.contents }"></c:set>
 												<c:forEach items="${reportVO.studentVOs}" var="studentVO">
 													<c:set var="name" value="${studentVO.name }"></c:set>
 													
 												</c:forEach>
 													<td>${order}주차</td>
-													<td>${reportName }</td>
+													<td>${reportContents }</td>
 													<td>${submissionDate }</td>
 												
 												

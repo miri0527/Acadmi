@@ -55,6 +55,8 @@ public interface StudentDAO {
 	//과제 상세 페이지
 	public ReportRegistrationVO getReportDetail(ReportRegistrationVO reportRegistrationVO) throws Exception;
  	
+	//과제 등록
+	public int setReportAdd(ReportVO reportVO) throws Exception;
 	
 	//내가 제출한 과제
 	public Long getReportTotalCount() throws Exception;
