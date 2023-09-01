@@ -148,7 +148,8 @@
   	
   	<!-- 계획서 차수 insert -->
   	<insert id="setClassAdd" parameterType="ClassVO">
-  		INSERT INTO CLASS (SYLLABUSNUM,`ORDER`,SUBJECT,GOAL,CAPABILITY,NOTE) VALUES (#{syllabusNum},#{order},#{subject},#{goal},
+  		INSERT INTO CLASS 
+  		VALUES (#{syllabusNum},#{order},#{lectureNum},#{subject},#{goal},
   		#{capability},#{note})
   	</insert>
   	
@@ -232,6 +233,7 @@
   			<collection property="classVOs" javaType="List" ofType="ClassVO">
   				<id column="SYLLABUSNUM" property="syllabusNum"/>
   				<result column="ORDER" property="order"/>
+  				<result column="LECTURENUM" property="lectureNum"/>
   				<result column="SUBJECT" property="subject"/>
   				<result column="GOAL" property="goal"/>
   				<result column="CAPABILITY" property="capability"/>

@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.acadmi.board.BoardVO;
@@ -24,11 +25,14 @@ import com.acadmi.board.notice.NoticeService;
 import com.acadmi.board.notice.NoticeVO;
 import com.acadmi.lecture.LectureVO;
 import com.acadmi.period.PeriodVO;
+import com.acadmi.report.ReportFilesVO;
 import com.acadmi.report.ReportRegistrationVO;
 import com.acadmi.report.ReportVO;
 import com.acadmi.student.lecture.StudentLectureVO;
 import com.acadmi.syllabus.ClassVO;
+import com.acadmi.util.FileManager;
 import com.acadmi.util.Pagination;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -178,7 +182,7 @@ public class StudentController {
 	
 	//과제 열람
 	@GetMapping("lecture/report/list")
-	public ModelAndView getReportList(ClassVO classVO, ReportVO reportVO, ReportRegistrationVO registrationVO, LectureVO lectureVO, HttpSession session) throws Exception {
+	public ModelAndView getReportList( ReportRegistrationVO registrationVO, LectureVO lectureVO, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
@@ -186,21 +190,21 @@ public class StudentController {
 		Authentication authentication = contextImpl.getAuthentication();
 		
 		lectureVO = studentService.getLectureDetail(lectureVO);
-		classVO.setLectureNum(lectureVO.getLectureNum());
+		registrationVO.setLectureNum(lectureVO.getLectureNum()); 
 		
 	
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("lectureNum", classVO.getLectureNum());
+		map.put("lectureNum", registrationVO.getLectureNum());
 		map.put("reportName", registrationVO.getReportName());
 		
-		List<ClassVO> ar = studentService.getReportList(map);
+		List<ReportRegistrationVO> ar = studentService.getReportList(map);
+
 		
 		mv.addObject("list", ar);
 		mv.addObject("lecture", lectureVO);
-	
-		log.error("list::{}", ar.get(0).getReportRegistrationVOs().get(0).getReportName());
-	
+		
+
 		mv.setViewName("student/lecture/report/list");
 		
 		return mv;
@@ -225,19 +229,18 @@ public class StudentController {
 	
 	//과제 등록
 	@GetMapping("lecture/report/add")
-	public ModelAndView setReportAdd(LectureVO lectureVO, ReportVO reportVO, ReportRegistrationVO registrationVO, HttpSession session) throws Exception {
+	public ModelAndView setReportAdd(ReportVO reportVO, LectureVO lectureVO, ReportRegistrationVO registrationVO,  HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
 		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
 		Authentication authentication = contextImpl.getAuthentication();
 		
+		reportVO.setRegistrationNum(registrationVO.getRegistrationNum());
 		reportVO.setUsername(authentication.getName());
-		reportVO.setReportNum(registrationVO.getRegistrationNum());
 		
-		lectureVO = studentService.getLectureDetail(lectureVO);
-		
-		mv.addObject("reporVO", reportVO);
+
+		mv.addObject("reportVO", reportVO);
 		mv.addObject("lecture", lectureVO);
 		mv.setViewName("student/lecture/report/add");
 		
@@ -245,11 +248,10 @@ public class StudentController {
 	}
 
 	@PostMapping("lecture/report/add")
-	public ModelAndView setReportAdd(ReportVO reportVO, LectureVO lectureVO) throws Exception {
+	public ModelAndView setReportAdd(ReportVO reportVO, LectureVO lectureVO, MultipartFile[] addfiles) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
-		lectureVO = studentService.getLectureDetail(lectureVO);
-		int result = studentService.setReportAdd(reportVO);
+		int result = studentService.setReportAdd(reportVO, addfiles);
 		
 		String message= "등록 실패";
 		
@@ -267,38 +269,41 @@ public class StudentController {
 		
 	}
 	
-	//내가 제출한 과제 열람
-	@GetMapping("lecture/myReportList")
-	public ModelAndView getMyReportList(ClassVO classVO, ReportVO reportVO , LectureVO lectureVO, Pagination pagination, HttpSession session) throws Exception {
+	//과제 제출물
+	@GetMapping("lecture/report/submission")
+	public ModelAndView getMyReportList(ReportVO reportVO ,HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
 		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
 		Authentication authentication = contextImpl.getAuthentication();
 		
-		lectureVO = studentService.getLectureDetail(lectureVO);
-		classVO.setLectureNum(lectureVO.getLectureNum());
 		reportVO.setUsername(authentication.getName());
+		
+		List<ReportVO> ar = studentService.getMyReportList(reportVO);
 	
-		Map<String, Object> map = new HashMap<>();
-		
-		map.put("lectureNum", classVO.getLectureNum());
-		map.put("username", reportVO.getUsername());
-		map.put("pagination", pagination);
-		
-		List<ClassVO> ar = studentService.getMyReportList(map);
-		
-		
+
 		mv.addObject("list", ar);
-		mv.addObject("lecture", lectureVO);
-	
-	
-		mv.setViewName("student/lecture/myReportList");
+		mv.setViewName("student/lecture/report/submission");
 		
 		
 		return mv;
 	}
 	
+	//파일 다운로드
+	@GetMapping("fileDown")
+	public ModelAndView renderMergedOutputModel(ReportFilesVO reportFilesVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		reportFilesVO = studentService.getFileDetail(reportFilesVO);
+		
+		
+		mv.addObject("reportFilesVO", reportFilesVO);
+		mv.setViewName("fileManager");
+		
+		return mv;
+		
+	}
 
 
 	

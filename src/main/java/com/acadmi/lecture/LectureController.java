@@ -260,6 +260,7 @@ public class LectureController {
 			ClassVO newClassVO = new ClassVO();
 			newClassVO.setSyllabusNum(classVO.getSyllabusNum());
 	        newClassVO.setOrder(i);
+	        newClassVO.setLectureNum(lectureVO.getLectureNum());
 	        newClassVO.setSubject(formData.get("subject" + i));
 	        newClassVO.setGoal(formData.get("goal" + i));
 	        newClassVO.setCapability(formData.get("capability" + i));

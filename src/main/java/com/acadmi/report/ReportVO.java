@@ -14,8 +14,7 @@ public class ReportVO {
 	private Long reportNum;
 	private Long registrationNum;
 	private String username;
-	private String contents;
-	private Float score;
+	private Integer score;
 	private Integer grading;
 	private Date submissionDate;
 	

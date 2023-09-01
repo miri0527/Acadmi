@@ -5,16 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.acadmi.board.BoardVO;
 import com.acadmi.board.notice.NoticeVO;
 import com.acadmi.lecture.LectureVO;
 import com.acadmi.period.PeriodVO;
+import com.acadmi.report.ReportFilesVO;
 import com.acadmi.report.ReportRegistrationVO;
 import com.acadmi.report.ReportVO;
 import com.acadmi.student.lecture.StudentLectureVO;
 import com.acadmi.syllabus.ClassVO;
+import com.acadmi.util.FileManager;
+import com.acadmi.util.FileVO;
 import com.acadmi.util.Pagination;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +30,11 @@ public class StudentService {
 	
 	@Autowired
 	private StudentDAO studentDAO;
+	@Autowired
+	private FileManager fileManager;
+	
+	@Value("${app.upload.report}")
+	private String path;
 	
 	//현재 수강중인 강의
 	public List<LectureVO> getCurrentLectureList(LectureVO lectureVO) throws Exception {
@@ -101,9 +111,10 @@ public class StudentService {
     
     
     //과제 리스트
-    public List<ClassVO> getReportList(Map<String, Object> map) throws Exception {
+    public List<ReportRegistrationVO> getReportList(Map<String, Object> map) throws Exception {
     	return studentDAO.getReportList(map);
     }
+    
     
     //과제 상세 페이지
     public ReportRegistrationVO getReportDetail(ReportRegistrationVO reportRegistrationVO) throws Exception {
@@ -111,28 +122,35 @@ public class StudentService {
     }
     
     //과제 등록
-    public int setReportAdd(ReportVO reportVO) throws Exception {
-    	return studentDAO.setReportAdd(reportVO);
+    public int setReportAdd(ReportVO reportVO, MultipartFile [] multipartFiles) throws Exception {
+    	int result = studentDAO.setReportAdd(reportVO);
+    	
+    	log.error("reportNum::{}",reportVO.getReportNum());
+    	
+    	if(multipartFiles !=null) {
+    		for(MultipartFile multipartFile : multipartFiles) {
+    			if(!multipartFile.isEmpty()) {
+					String fileName = fileManager.saveFile(path, multipartFile);
+					ReportFilesVO reportFilesVO = new ReportFilesVO();
+					reportFilesVO.setReportNum(reportVO.getReportNum());
+					reportFilesVO.setFileName(fileName);
+					reportFilesVO.setOriName(multipartFile.getOriginalFilename());
+					
+					result = studentDAO.setReportFilesAdd(reportFilesVO);
+				}
+    		}
+    	}
+    	
+    	return result;
     }
-
     
-    //내가 제출한 과제
-    public List<ClassVO> getMyReportList(Map<String,Object> map) throws Exception {
-    	Long totalCount = studentDAO.getReportTotalCount();
-    	
-    	Pagination pagination = (Pagination) map.get("pagination");
-    	
-    	pagination.makeNum(totalCount);
-    	pagination.makeStartRow();
-    	
-    	map.put("startRow", pagination.getStartRow());
-    	map.put("perPage", pagination.getPerPage());
-    	map.put("reportName", pagination.getReportName());
-    	map.put("order", pagination.getOrder());
-    	
-    	List<ClassVO> ar = studentDAO.getMyReportList(map);
-    	
-    	return ar;
+    
+   //과제 제출물
+    public List<ReportVO> getMyReportList(ReportVO reportVO) throws Exception {
+    	return studentDAO.getMyReportList(reportVO);
     }
     	
+    public ReportFilesVO getFileDetail(ReportFilesVO reportFilesVO) throws Exception {
+    	return studentDAO.getFileDetail(reportFilesVO);
+    }
  } 

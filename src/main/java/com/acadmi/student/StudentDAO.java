@@ -10,10 +10,12 @@ import com.acadmi.board.BoardVO;
 import com.acadmi.board.notice.NoticeVO;
 import com.acadmi.lecture.LectureVO;
 import com.acadmi.period.PeriodVO;
+import com.acadmi.report.ReportFilesVO;
 import com.acadmi.report.ReportRegistrationVO;
 import com.acadmi.report.ReportVO;
 import com.acadmi.student.lecture.StudentLectureVO;
 import com.acadmi.syllabus.ClassVO;
+import com.acadmi.util.FileVO;
 import com.acadmi.util.Pagination;
 
 @Mapper
@@ -50,15 +52,17 @@ public interface StudentDAO {
 	public PeriodVO getFavorite() throws Exception;
 	
 	//과제 리스트
-	public List<ClassVO> getReportList(Map<String, Object> map) throws Exception;
+	public List<ReportRegistrationVO> getReportList(Map<String, Object> map) throws Exception;
+
 	
 	//과제 상세 페이지
 	public ReportRegistrationVO getReportDetail(ReportRegistrationVO reportRegistrationVO) throws Exception;
  	
 	//과제 등록
 	public int setReportAdd(ReportVO reportVO) throws Exception;
+	public int setReportFilesAdd(ReportFilesVO reportFilesVO) throws Exception;
 	
-	//내가 제출한 과제
-	public Long getReportTotalCount() throws Exception;
-	public List<ClassVO> getMyReportList(Map<String, Object> map)throws Exception;
+	//과제 제출물
+	public List<ReportVO> getMyReportList(ReportVO reportVO) throws Exception;
+	public ReportFilesVO getFileDetail(ReportFilesVO reportFilesVO) throws Exception;
 }

@@ -125,6 +125,7 @@
 		                    						</tr>
 			                    					<c:forEach begin="1" end="8" var="i">
 			                    						<tr>
+			         
 			                    							<td><input type="hidden" name="order" value="${i}">${i}차수</td>
 		                    								<td><input type="text" name="subject${i}" class="form-control" id="subject${i}" value=""></td>
 		                    								<td><input type="text" name="goal${i}" class="form-control" id="goal${i}"value=""></td>

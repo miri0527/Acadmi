@@ -12,9 +12,11 @@ public class ReportRegistrationVO {
 	
 	private Long registrationNum;
 	private Long syllabusNum;
+	private Long lectureNum;
 	private Integer order;
 	private String reportName;
 	private String contents;
+	private Integer registrationScore;
 	private java.util.Date startDate;
 	private java.util.Date submissionDate;
 	

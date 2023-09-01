@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.AbstractView;
 
 import com.acadmi.chat.ChatFilesVO;
+import com.acadmi.report.ReportFilesVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,34 +62,75 @@ public class FileManager extends AbstractView {
 		}
 		FileVO fileVO = (FileVO)model.get("fileVO");
 		
-		String board = (String)model.get("board");
+		if(fileVO !=null) {
+			String board = (String)model.get("board");
+			
+			File file = new File(path+board, fileVO.getFileName());
+			
+			//한글 처리
+			response.setCharacterEncoding("UTF-8");
+			
+			//총 파일 크기
+			response.setContentLengthLong(file.length());
+			
+			//다운로드시 파일의 이름을 인코딩
+			String oriName = URLEncoder.encode(fileVO.getOriName(), "UTF-8");
+			
+			//header 설정
+			response.setHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			
+			//HDD에서 파일을 읽고
+			FileInputStream fi = new FileInputStream(file);
+			//Client로 전송 준비
+			OutputStream os = response.getOutputStream();
+			
+			//전송
+			FileCopyUtils.copy(fi, os);
+			
+			//자원 해제
+			os.close();
+			fi.close();
+			
+			return;
+		}
+
+	
 		
-		File file = new File(path+board, fileVO.getFileName());
+		ReportFilesVO reportFilesVO = (ReportFilesVO)model.get("reportFilesVO");
 		
-		//한글 처리
-		response.setCharacterEncoding("UTF-8");
+		if(reportFilesVO !=null) {
+			File file = new File(path+"report",reportFilesVO.getFileName());
+			//한글 처리
+			response.setCharacterEncoding("UTF-8");
+			
+			//총 파일 크기
+			response.setContentLengthLong(file.length());
+			
+			//다운로드시 파일의 이름을 인코딩
+			String oriName = URLEncoder.encode(reportFilesVO.getOriName(), "UTF-8");
+			
+			//header 설정
+			response.setHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			
+			//HDD에서 파일을 읽고
+			FileInputStream fi = new FileInputStream(file);
+			//Client로 전송 준비
+			OutputStream os = response.getOutputStream();
+			
+			//전송
+			FileCopyUtils.copy(fi, os);
+			
+			//자원 해제
+			os.close();
+			fi.close();
+			return;
+		}
 		
-		//총 파일 크기
-		response.setContentLengthLong(file.length());
 		
-		//다운로드시 파일의 이름을 인코딩
-		String oriName = URLEncoder.encode(fileVO.getOriName(), "UTF-8");
 		
-		//header 설정
-		response.setHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
-		response.setHeader("Content-Transfer-Encoding", "binary");
 		
-		//HDD에서 파일을 읽고
-		FileInputStream fi = new FileInputStream(file);
-		//Client로 전송 준비
-		OutputStream os = response.getOutputStream();
-		
-		//전송
-		FileCopyUtils.copy(fi, os);
-		
-		//자원 해제
-		os.close();
-		fi.close();
 	}
 	
 	//1. HDD에 파일을 저장하고 저장된 파일명을 리턴

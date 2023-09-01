@@ -13,6 +13,7 @@
 	<!-- CSS/favicon 적용 -->
 	<c:import url="../../../temp/style.jsp"></c:import>
 	<!-- CSS/favicon 끝 -->
+
 </head>
 <body class="hold-transition si	debar-mini layout-fixed">	
 <div class="wrapper">
@@ -76,13 +77,8 @@
 								</div>
 								<div>
 								<c:forEach items="${reportRegostrationVO.reportVOs}" var="reportVO">
-									<c:if test="${reportVO.reportNum eq null }">
-										<a href="./add?lectureNum=${lecture.lectureNum}&registrationNum=${reportRegostrationVO.registrationNum}" class="btn btn-info float-right" style="margin-right: 10px">제출</a>
-									</c:if>
-									<c:if test="${reportVO.reportNum ne null }">
-										
-									</c:if>
-									
+									<div class="registrationNum"  data-num="${reportRegostrationVO.registrationNum}"></div>
+									<c:set var="reportNum" value="${reportVO.reportNum }"></c:set>
 								</c:forEach>
 									
 								</div>
@@ -91,14 +87,54 @@
 							
 						</div>
 						
+						<c:if test="${reportNum ne null }">
+						
+							<div class="card"style="padding-top: 15px; margin-top: 10px; padding-bottom : 30px; padding-left : 20px;" id="myReportList" >
+							</div>
+							
+						</c:if>
+						<c:if test="${reportNum eq null}">
+								<div style="width:200px; height : 36px; float:left;" class="card">
+									<div style="text-align : center; font-size : 15px; margin-top : 6px; font-weight : bold;" >과제 제출</div>
+								</div>
+								<div style="width:83%;  float:left;" id="reportAdd"></div>
+							
+							
+						</c:if>
+						
 						
 					</div>
 					
 			</div>
 		</div>
 	</div>
-		
-		
 </div>
+<script type="text/javascript">
+	let registrationNum = $(".registrationNum").data("num")
+	let lectureNum = ${lecture.lectureNum}
+	
+	$.ajax ({
+		url : '/student/lecture/report/submission',
+		type : 'GET',
+		data : {
+			registrationNum : registrationNum
+		},
+		success: function(response) {
+	        $("#myReportList").html(response.trim());
+	    }
+	})
+	
+	$.ajax ({
+		url : '/student/lecture/report/add',
+		type : 'GET',
+		data : {
+			registrationNum : registrationNum,
+			lectureNum : lectureNum
+		},
+		success : function(response) {
+			$("#reportAdd").html(response.trim());
+		}
+	})
+</script>
 </body>
 </html>

@@ -38,6 +38,11 @@
 		<a href="/lectureQna/list?lectureNum=${lecture.lectureNum}" id="lectureQnaList">강의 질의응답</a>
 	</div>
 	
+	<!-- Submenu_3 -->
+	<button onclick="myFunction_3()" class="sidebar-menu">
+		<i class="fas fa-angle-down fa-2xs"></i>&nbsp
+		학습 활동
+	</button>
 </div>
 
 <script type="text/javascript">
