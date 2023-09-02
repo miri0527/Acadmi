@@ -58,11 +58,15 @@ public interface StudentDAO {
 	//과제 상세 페이지
 	public ReportRegistrationVO getReportDetail(ReportRegistrationVO reportRegistrationVO) throws Exception;
  	
-	//과제 등록
+	//과제 제출
 	public int setReportAdd(ReportVO reportVO) throws Exception;
 	public int setReportFilesAdd(ReportFilesVO reportFilesVO) throws Exception;
 	
 	//과제 제출물
 	public List<ReportVO> getMyReportList(ReportVO reportVO) throws Exception;
 	public ReportFilesVO getFileDetail(ReportFilesVO reportFilesVO) throws Exception;
+	
+	//과제 제출 삭제
+	public int setReportDelete(ReportVO reportVO) throws Exception;
+	public int setReporFiletDelete(ReportFilesVO reportFilesVO) throws Exception;
 }

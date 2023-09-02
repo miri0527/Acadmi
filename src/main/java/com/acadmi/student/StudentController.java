@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +44,7 @@ public class StudentController {
 	
 	@Autowired
 	private StudentService studentService;
+	
 	
 	//현재 연도 계산
 	private int calculateCurrentYear() {
@@ -96,11 +98,10 @@ public class StudentController {
 	
 		
 		List<LectureVO> ar =  studentService.getMyLectureList(lectureVO);
+
 		
 		mv.addObject("list", ar);
-		
-		
-		mv.addObject("map", studentService.getYear(lectureVO));
+		//mv.addObject("map", studentService.getYear(lectureVO));
 		mv.addObject("obj", lectureVO);
 		mv.addObject("year", calculateCurrentYear());
 		mv.addObject("semester", calculateCurrentSemester());
@@ -139,7 +140,7 @@ public class StudentController {
 		List<ClassVO> ar = studentService.getSyllabusClass(lectureVO); 
 		mv.addObject("lecture", lectureVO);
 		mv.addObject("classes",ar);
-		mv.setViewName("temp/lecture_header");
+		mv.setViewName("temp/lecture_header"); 
 		mv.setViewName("student/lecture/main");
 		return mv;
 		
@@ -279,10 +280,10 @@ public class StudentController {
 		Authentication authentication = contextImpl.getAuthentication();
 		
 		reportVO.setUsername(authentication.getName());
-		
+	
 		List<ReportVO> ar = studentService.getMyReportList(reportVO);
 	
-
+		
 		mv.addObject("list", ar);
 		mv.setViewName("student/lecture/report/submission");
 		
@@ -305,6 +306,25 @@ public class StudentController {
 		
 	}
 
+	//과제 제출 삭제
+	@PostMapping("lecture/report/delete")
+	public ModelAndView setReportDelete(ReportFilesVO reportFilesVO, ReportVO reportVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
 
+		int result = studentService.setReportDelete(reportFilesVO,reportVO);
+		
+		String message="삭제 실패";
+		
+		if(result > 0) {
+			message="과제가 삭제되었습니다.";
+		}
+		
+		mv.addObject("result", message);
+		mv.setViewName("common/ajaxResult");
+		
+		return mv;
+	}
+	
+	
 	
 }

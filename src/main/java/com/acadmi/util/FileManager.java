@@ -3,6 +3,7 @@ package com.acadmi.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;
 import java.util.UUID;
@@ -176,6 +177,15 @@ public class FileManager extends AbstractView {
 		FileCopyUtils.copy(payLoad, file);
 		
 		return fileName;
+	}
+	
+	//파일 HDD삭제
+	public boolean fileDelete(String path, String fileName) throws Exception {
+		
+		File file = new File(path + "\\" + fileName);
+	
+		
+		return file.delete();
 	}
 
 }

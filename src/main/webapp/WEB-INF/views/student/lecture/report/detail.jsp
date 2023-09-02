@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="/css/sidebar.css">
 <head>
 <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +12,7 @@
 	<!-- CSS/favicon 적용 -->
 	<c:import url="../../../temp/style.jsp"></c:import>
 	<!-- CSS/favicon 끝 -->
+	<link rel="stylesheet" href="/css/sidebar.css">
 
 </head>
 <body class="hold-transition si	debar-mini layout-fixed">	

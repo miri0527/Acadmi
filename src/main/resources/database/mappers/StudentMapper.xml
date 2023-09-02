@@ -399,6 +399,19 @@
 		WHERE FILENUM=#{fileNum}
 	</select>
 	
+	<!--과제 제출물 삭제  -->
+	<delete id="setReportDelete" parameterType="ReportVO">
+		DELETE FROM REPORT 
+		WHERE REPORTNUM=#{reportNum}
+	</delete>
+	
+	<delete id="setReporFiletDelete" parameterType="ReportFilesVO">
+		DELETE FROM REPORTFILES 
+		WHERE FILENUM=#{fileNum}
+	</delete>
+	
+
+	
 	<resultMap type="ReportVO" id="ReportList">
 		<id column="REPORTNUM" property="reportNum"/>
 		<result column="REGISTRATIONNUM" property="registrationNum"/>

@@ -1,6 +1,7 @@
 package com.acadmi.student;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -121,11 +122,10 @@ public class StudentService {
     	return studentDAO.getReportDetail(reportRegistrationVO);
     }
     
-    //과제 등록
+    //과제 제출
     public int setReportAdd(ReportVO reportVO, MultipartFile [] multipartFiles) throws Exception {
     	int result = studentDAO.setReportAdd(reportVO);
     	
-    	log.error("reportNum::{}",reportVO.getReportNum());
     	
     	if(multipartFiles !=null) {
     		for(MultipartFile multipartFile : multipartFiles) {
@@ -153,4 +153,18 @@ public class StudentService {
     public ReportFilesVO getFileDetail(ReportFilesVO reportFilesVO) throws Exception {
     	return studentDAO.getFileDetail(reportFilesVO);
     }
+    
+    //과제 제출 삭제
+    public int setReportDelete(ReportFilesVO reportFilesVO, ReportVO reportVO) throws Exception {
+    	reportFilesVO = studentDAO.getFileDetail(reportFilesVO);
+    	int  result = studentDAO.setReportDelete(reportVO);
+    	result = studentDAO.setReporFiletDelete(reportFilesVO);
+
+    	boolean check =  fileManager.fileDelete(path, reportFilesVO.getFileName());
+	
+		return result;
+    	
+    }
+    
+
  } 
