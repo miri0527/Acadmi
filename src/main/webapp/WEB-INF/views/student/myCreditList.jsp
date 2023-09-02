@@ -63,8 +63,8 @@
 					               		</select>
 					               		<label class="mx-2">학기</label>
 					               		<select class="select2" name="semester"style="width:115px;" id="semester">
-					               			<option value="1" ${param.semester eq 1 or semester eq 1 ? 'selected' : '' }>1학기</option>
-					               			<option value="2" ${param.semester eq 2 or semester eq 2 ? 'selected' : '' }>2학기</option>
+					               			<option value="1" ${empty param.semester and semester eq 1 ? 'selected' : (param.semester eq 1 ? 'selected' : '') }>1학기</option>
+					               			<option value="2" ${empty param.semester and semester eq 2 ? 'selected' : (param.semester eq 2 ? 'selected' : '') }>2학기</option>
 					               		</select>
 					               		<button type="submit" class="btn btn-default ml-1" id="submit">
 							            	<i class="fas fa-search"></i>
