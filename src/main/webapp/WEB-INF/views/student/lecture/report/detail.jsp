@@ -117,7 +117,8 @@
 		url : '/student/lecture/report/submission',
 		type : 'GET',
 		data : {
-			registrationNum : registrationNum
+			registrationNum : registrationNum,
+			lectureNum : lectureNum
 		},
 		success: function(response) {
 	        $("#myReportList").html(response.trim());

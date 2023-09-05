@@ -166,5 +166,30 @@ public class StudentService {
     	
     }
     
+    //과제 제출 수정
+    public int setReportUpdate(ReportVO reportVO, ReportFilesVO reportFilesVO, MultipartFile[] multipartFiles) throws Exception {
+    	int result =  studentDAO.setReportUpdate(reportVO);
+    	reportFilesVO = studentDAO.getFileDetail(reportFilesVO);
+    	result = studentDAO.setReporFiletDelete(reportFilesVO);
+    	
+    	boolean check  = fileManager.fileDelete(path, reportFilesVO.getFileName());
+    	
+
+    	if(multipartFiles !=null) {
+    		for(MultipartFile multipartFile : multipartFiles) {
+    			if(!multipartFile.isEmpty()) {
+					String fileName = fileManager.saveFile(path, multipartFile);
+					reportFilesVO.setReportNum(reportVO.getReportNum());
+					reportFilesVO.setFileName(fileName);
+					reportFilesVO.setOriName(multipartFile.getOriginalFilename());
+					
+					result = studentDAO.setReportFilesAdd(reportFilesVO);
+				}
+    		}
+    	}
+    	
+    	return result;
+    }
+    
 
  } 

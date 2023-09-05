@@ -410,7 +410,12 @@
 		WHERE FILENUM=#{fileNum}
 	</delete>
 	
-
+	<!--과제 제출물 수정 -->
+	<update id="setReportUpdate" parameterType="ReportVO">
+		UPDATE REPORT 
+		SET SUBMISSIONDATE=NOW()
+		WHERE REPORTNUM = #{reportNum}
+	</update>
 	
 	<resultMap type="ReportVO" id="ReportList">
 		<id column="REPORTNUM" property="reportNum"/>

@@ -69,4 +69,7 @@ public interface StudentDAO {
 	//과제 제출 삭제
 	public int setReportDelete(ReportVO reportVO) throws Exception;
 	public int setReporFiletDelete(ReportFilesVO reportFilesVO) throws Exception;
+	
+	//과제 제출 수정
+	public int setReportUpdate(ReportVO reportVO) throws Exception;
 }

@@ -11,6 +11,7 @@ import lombok.Setter;
 public class ReportRegistrationVO {
 	
 	private Long registrationNum;
+	private String username;
 	private Long syllabusNum;
 	private Long lectureNum;
 	private Integer order;

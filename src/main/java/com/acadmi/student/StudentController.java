@@ -272,19 +272,21 @@ public class StudentController {
 	
 	//과제 제출물
 	@GetMapping("lecture/report/submission")
-	public ModelAndView getMyReportList(ReportVO reportVO ,HttpSession session) throws Exception {
+	public ModelAndView getMyReportList(ReportVO reportVO ,HttpSession session, LectureVO lectureVO) throws Exception {
 		ModelAndView mv = new ModelAndView();
+		
 		
 		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
 		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
 		Authentication authentication = contextImpl.getAuthentication();
 		
 		reportVO.setUsername(authentication.getName());
-	
+		
 		List<ReportVO> ar = studentService.getMyReportList(reportVO);
-	
 		
 		mv.addObject("list", ar);
+		mv.addObject("lecture", lectureVO);
+		mv.addObject("registration",reportVO.getRegistrationNum());
 		mv.setViewName("student/lecture/report/submission");
 		
 		
@@ -325,6 +327,28 @@ public class StudentController {
 		return mv;
 	}
 	
+	//과제 제출 수정
+	@PostMapping("lecture/report/update")
+	public ModelAndView setReportUpdate(ReportFilesVO reportFilesVO, ReportVO reportVO, MultipartFile[] addfiles, LectureVO lectureVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = studentService.setReportUpdate(reportVO, reportFilesVO, addfiles);
+		
 	
+		String message= "등록 실패";
+		
+		if(result > 0) {
+			message = "과제가 수정되었습니다.";
+			
+		}
+		
+		mv.addObject("result", message);
+		mv.setViewName("common/result");
+		mv.addObject("url", "./detail?lectureNum=" + lectureVO.getLectureNum() + "&registrationNum=" + reportVO.getRegistrationNum());
+
+		
+		return mv;
+		
+	}
 	
 }
