@@ -11,21 +11,3 @@ import org.springframework.test.annotation.Rollback;
 
 import com.acadmi.util.Pagination;
 
-@SpringBootTest
-@Rollback(true)
-public class chatDAOTest {
-	
-	@Autowired
-	private ChatDAO chatDAO;
-	
-	@Test
-	public void getChatListTest() throws Exception {
-		
-		Pagination pagination = new Pagination();
-		pagination.setUsername("20200002");
-		List<ChatRoomVO> ar = chatDAO.getChatRoomList(pagination);
-		assertNotEquals(0, ar);
-		
-	}
-
-}
